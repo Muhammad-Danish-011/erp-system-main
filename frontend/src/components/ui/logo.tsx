@@ -1,0 +1,18 @@
+// components/Logo.tsx
+
+import Image from "next/image"; // Importing the Next.js Image component for optimized image loading
+
+const Logo = () => {
+  return (
+    <div className="flex justify-center items-center mb-2 rounded-lg bg-slate-800 mr-2">
+      <Image src={"/logo.png"}     
+        alt="Universal Motors Logo"
+        width={140}
+        height={0}
+        className="mb-0 rounded-lg"
+      />
+    </div>
+  );
+};
+
+export default Logo;
