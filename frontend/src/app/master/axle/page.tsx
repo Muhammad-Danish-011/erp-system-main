@@ -1,8 +1,83 @@
-export default function MasterPage() {
+"use client";
+import { useState } from "react";
+
+export default function VehicleAxleMaster() {
+  const [axleName, setAxleName] = useState("");
+  const [isActive, setIsActive] = useState(true);
+
+  const [axles, setAxles] = useState([
+    { id: 1, name: "3 Axle", active: true },
+    { id: 2, name: "2 Axle", active: true },
+    { id: 3, name: "4 Axle", active: true },
+    { id: 4, name: "4x2", active: true },
+    { id: 5, name: "6x2", active: true },
+  ]);
+
+  const handleSave = () => {
+    if (!axleName) return;
+    setAxles([...axles, { id: axles.length + 1, name: axleName, active: isActive }]);
+    setAxleName("");
+    setIsActive(true);
+  };
+
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">Master</h1>
-      <p>Select an option from the Master menu above.</p>
+    <div className="p-6 bg-white rounded-lg shadow-lg max-w-lg mx-auto">
+      {/* Buttons */}
+      <div className="flex gap-2 mb-4">
+        <button onClick={handleSave} className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+          Save
+        </button>
+        <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Update</button>
+        <button className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Delete</button>
+        <button
+          onClick={() => {
+            setAxleName("");
+            setIsActive(true);
+          }}
+          className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500"
+        >
+          Clear
+        </button>
+      </div>
+
+      {/* Form */}
+      <div className="flex items-center gap-4 mb-4">
+        <label className="text-sm font-medium">Axle Name:</label>
+        <input
+          type="text"
+          value={axleName}
+          onChange={(e) => setAxleName(e.target.value)}
+          className="border border-gray-300 rounded px-3 py-2"
+        />
+        <label className="flex items-center gap-2">
+          <input type="checkbox" checked={isActive} onChange={(e) => setIsActive(e.target.checked)} />
+          Is Active
+        </label>
+      </div>
+
+      {/* Table */}
+      <div className="overflow-x-auto border border-gray-300 rounded">
+        <table className="min-w-full text-sm">
+          <thead className="bg-gray-200 text-left">
+            <tr>
+              <th className="px-4 py-2 border">Axle ID</th>
+              <th className="px-4 py-2 border">Axle</th>
+              <th className="px-4 py-2 border">Active</th>
+            </tr>
+          </thead>
+          <tbody>
+            {axles.map((row) => (
+              <tr key={row.id} className="hover:bg-gray-50">
+                <td className="px-4 py-2 border">{row.id}</td>
+                <td className="px-4 py-2 border">{row.name}</td>
+                <td className="px-4 py-2 border text-center">
+                  <input type="checkbox" checked={row.active} readOnly />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
