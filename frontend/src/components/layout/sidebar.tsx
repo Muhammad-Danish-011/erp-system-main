@@ -13,46 +13,78 @@ import {
   ChevronDown,
   ChevronRight,
   Menu,
+  DollarSign,
+  CheckCircle,
+  Upload,
+  UserPlus,
+  Car,
+  MapPin,
+  Wrench,
+  ListChecks,
+  Palette,
+  Anchor,
+  Globe,
+  Truck,
+  ClipboardList,
+  PlusSquare,
+  FileSpreadsheet,
+  CreditCard,
+  ShoppingCart,
+  AxeIcon,
 } from "lucide-react";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   {
     name: "Master",
+    href: "",
     icon: Package,
     children: [
-      { name: "Car Brand", href: "/master/car-brand" },
-      { name: "Map - Inventory / Port Location", href: "/master/map-inventory-port-location" },
-      { name: "Inspection Cost", href: "/master/inspection-cost" },
-      { name: "Vehicle Category", href: "/master/vehicle-category" },
-      { name: "Car Model", href: "/master/car-model" },
-      { name: "Additional Options", href: "/master/additional-options" },
-      { name: "Color", href: "/master/color" },
-      { name: "Ports", href: "/master/ports" },
-      { name: "Port-Country Mapping", href: "/master/port-country-mapping" },
-      { name: "Freight Charges", href: "/master/freight-charges" },
-      { name: "Axle", href: "/master/axle" },
+      { name: "Car Brand", href: "/master/car-brand", icon: Car },
+      { name: "Map - Inventory / Port Location", href: "/master/map-inventory-port-location", icon: MapPin },
+      { name: "Inspection Cost", href: "/master/inspection-cost", icon: Wrench },
+      { name: "Vehicle Category", href: "/master/vehicle-category", icon: ListChecks },
+      { name: "Car Model", href: "/master/car-model", icon: Car },
+      { name: "Additional Options", href: "/master/additional-options", icon: PlusSquare },
+      { name: "Color", href: "/master/color", icon: Palette },
+      { name: "Ports", href: "/master/ports", icon: Anchor },
+      { name: "Port-Country Mapping", href: "/master/port-country-mapping", icon: Globe },
+      { name: "Freight Charges", href: "/master/freight-charges", icon: Truck },
+      { name: "Axle", href: "/master/axle", icon: AxeIcon },
     ],
   },
   {
     name: "Transaction",
+    href: "",
     icon: Users,
     children: [
-      { name: "Agent Portal", href: "/transaction/agent-portal" },
-      { name: "Accounts", href: "/transaction/accounts" },
-      { name: "Add Car Listing", href: "/transaction/add-car-listing" },
-      { name: "Porforma Invoice", href: "/transaction/porforma-invoice" },
-      { name: "Payments Received", href: "/transaction/payments-received" },
-      { name: "Sales Order", href: "/transaction/sales-order" },
+      { name: "Agent Portal", href: "/transaction/agent-portal", icon: Users },
+      {
+        name: "Accounts",
+        href: "",
+        icon: DollarSign,
+        children: [
+          { name: "Money Allocation", href: "/transaction/accounts/money-allocation", icon: DollarSign },
+          { name: "Sales Order Approval", href: "/transaction/accounts/sales-order-approval", icon: CheckCircle },
+          { name: "Payment Vouchers", href: "/transaction/accounts/payment-vouchers", icon: FileText },
+          { name: "Acknowledgement TT Uploaded", href: "/transaction/accounts/acknowledgement-tt", icon: Upload },
+          { name: "New Customer Approval", href: "/transaction/accounts/new-customer-approval", icon: UserPlus },
+        ],
+      },
+      { name: "Add Car Listing", href: "/transaction/add-car-listing", icon: PlusSquare },
+      { name: "Porforma Invoice", href: "/transaction/porforma-invoice", icon: FileSpreadsheet },
+      { name: "Payments Received", href: "/transaction/payments-received", icon: CreditCard },
+      { name: "Sales Order", href: "/transaction/sales-order", icon: ShoppingCart },
     ],
   },
-  { 
-    name: "Report", 
+  {
+    name: "Report",
+    href: "",
     icon: FileText,
     children: [
-      { name: "Voucher Report", href: "/orders/voucher-report" },
-      { name: "Proforma Invoice Report", href: "/orders/proforma-invoice-report" }
-    ]
+      { name: "Voucher Report", href: "/orders/voucher-report", icon: FileText },
+      { name: "Proforma Invoice Report", href: "/orders/proforma-invoice-report", icon: FileSpreadsheet },
+    ],
   },
 ];
 
@@ -60,40 +92,29 @@ const settingsNav = { name: "Settings", href: "/settings", icon: Settings };
 
 export function Sidebar() {
   const pathname = usePathname();
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const [openMenus, setOpenMenus] = useState<string[]>([]);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
-  return (
-    <div className={cn(
-      "flex h-full flex-col bg-gray-900 transition-all duration-300",
-      isCollapsed ? "w-16" : "w-64"
-    )}>
-      {/* Header */}
-      <div className="flex h-16 items-center justify-between border-b border-gray-800 px-4">
-        {!isCollapsed && <h1 className="text-xl font-bold text-white">ERP System</h1>}
-        <button 
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          className="text-gray-300 hover:text-white"
-        >
-          <Menu size={24} />
-        </button>
-      </div>
+  const toggleMenu = (menuName: string) => {
+    setOpenMenus((prev) =>
+      prev.includes(menuName)
+        ? prev.filter((m) => m !== menuName)
+        : [...prev, menuName]
+    );
+  };
 
-      {/* Main Navigation */}
-      <nav className="flex-1 space-y-1 px-2 py-4 overflow-y-auto">
-        {navigation.map((item) => {
-          const isActive = pathname.startsWith(item.href || "");
+  const renderMenu = (items: any[], depth = 0) => {
+    return (
+      <div className={depth > 0 ? "ml-6 mt-1 space-y-1" : "space-y-1"}>
+        {items.map((item) => {
+          const isActive = item.href && pathname.startsWith(item.href);
           const hasChildren = !!item.children;
+          const isOpen = openMenus.includes(item.name);
 
           return (
             <div key={item.name}>
-              {/* Main Menu Item */}
               <button
-                onClick={() =>
-                  hasChildren
-                    ? setOpenMenu(openMenu === item.name ? null : item.name)
-                    : null
-                }
+                onClick={() => (hasChildren ? toggleMenu(item.name) : null)}
                 className={cn(
                   "group flex w-full items-center rounded-md px-2 py-2 text-sm font-medium",
                   isActive
@@ -116,7 +137,7 @@ export function Sidebar() {
                     {hasChildren ? (
                       <>
                         <span className="flex-1 text-left">{item.name}</span>
-                        {openMenu === item.name ? (
+                        {isOpen ? (
                           <ChevronDown className="h-4 w-4" />
                         ) : (
                           <ChevronRight className="h-4 w-4" />
@@ -134,31 +155,48 @@ export function Sidebar() {
                 )}
               </button>
 
-              {/* Submenu */}
-              {!isCollapsed && hasChildren && openMenu === item.name && (
-                <div className="ml-8 mt-1 space-y-1">
-                  {item.children.map((sub) => (
-                    <Link
-                      key={sub.name}
-                      href={sub.href}
-                      className={cn(
-                        "block rounded-md px-2 py-1 text-sm",
-                        pathname === sub.href
-                          ? "bg-gray-800 text-white"
-                          : "text-gray-300 hover:bg-gray-700 hover:text-white"
-                      )}
-                    >
-                      {sub.name}
-                    </Link>
-                  ))}
-                </div>
-              )}
+              {/* Child Menu */}
+              {!isCollapsed && hasChildren && isOpen && renderMenu(item.children, depth + 1)}
             </div>
           );
         })}
+      </div>
+    );
+  };
+
+  return (
+    <div
+      className={cn(
+        "flex h-full flex-col bg-gray-900 transition-all duration-300",
+        isCollapsed ? "w-16" : "w-64"
+      )}
+    >
+      {/* Header */}
+      <div className="flex h-16 items-center justify-between border-b border-gray-800 px-4">
+        {!isCollapsed && (
+          <>
+            <img
+              src="/logo.png"
+              alt="Logo"
+              className="h-auto w-auto max-h-14 max-w-14 object-contain"
+            />
+            <h1 className="text-xl font-bold text-white">ERP System</h1>
+          </>
+        )}
+        <button
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          className="text-gray-300 hover:text-white"
+        >
+          <Menu size={24} />
+        </button>
+      </div>
+
+      {/* Navigation */}
+      <nav className="flex-1 px-2 py-4 overflow-y-auto">
+        {renderMenu(navigation)}
       </nav>
 
-      {/* Settings at Bottom */}
+      {/* Settings */}
       <div className="border-t border-gray-800 px-2 py-4">
         <Link
           href={settingsNav.href}

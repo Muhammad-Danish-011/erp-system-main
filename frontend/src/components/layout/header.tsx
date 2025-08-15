@@ -9,8 +9,8 @@ export function Header() {
   const getPageTitle = () => {
     if (pathname === "/dashboard") return "Dashboard";
     if (pathname.startsWith("/master")) return "Master";
-    if (pathname.startsWith("/customers")) return "Agent Portal"; 
-    if (pathname.startsWith("/orders")) return "Report";
+    if (pathname.startsWith("/transaction")) return "Transaction";
+    if (pathname.startsWith("/report")) return "Report";
     if (pathname.startsWith("/settings")) return "Settings";
     return "Dashboard";
   };
@@ -18,6 +18,7 @@ export function Header() {
   return (
     <header className="flex h-16 items-center justify-between border-b border-gray-200 bg-white px-4 sm:px-6 lg:px-8">
       <div className="flex items-center gap-4">
+       
         <h2 className="text-2xl font-semibold text-gray-900">{getPageTitle()}</h2>
       </div>
       <div className="flex items-center gap-4">
