@@ -19,3 +19,7 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.custom_scrollbar_hidden::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}

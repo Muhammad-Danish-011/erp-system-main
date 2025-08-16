@@ -192,7 +192,7 @@ export function Sidebar() {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-2 py-4 overflow-y-auto">
+      <nav className="flex-1 px-2 py-4 overflow-y-auto custom_scrollbar_hidden">
         {renderMenu(navigation)}
       </nav>
 
