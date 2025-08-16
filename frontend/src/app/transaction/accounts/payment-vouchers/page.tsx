@@ -10,10 +10,10 @@ export default function FinanceVoucherForm() {
     <div className="p-6 max-w-5xl mx-auto border rounded-lg shadow bg-white">
       {/* Top Buttons */}
       <div className="flex gap-3 mb-6">
-        <Button className="bg-blue-600 hover:bg-blue-700 text-white">💾 Save</Button>
-        <Button className="bg-green-600 hover:bg-green-700 text-white">🔄 Update</Button>
-        <Button className="bg-red-600 hover:bg-red-700 text-white">❌ Delete</Button>
-        <Button className="bg-gray-500 hover:bg-gray-600 text-white">🧹 Clear</Button>
+        <Button className="bg-blue-600 hover:bg-blue-700 text-white"> Save</Button>
+        <Button className="bg-green-600 hover:bg-green-700 text-white"> Update</Button>
+        <Button className="bg-red-600 hover:bg-red-700 text-white"> Delete</Button>
+        <Button className="bg-gray-500 hover:bg-gray-600 text-white"> Clear</Button>
       </div>
 
       {/* Form Layout */}
