@@ -173,24 +173,24 @@ export function Sidebar() {
     >
       {/* Header */}
       <div className="flex h-16 items-center justify-between border-b border-gray-800 px-4">
-        {!isCollapsed && (
-          <>
-            <img
-              src="/logo.png"
-              alt="Logo"
-              className="h-auto w-auto max-h-14 max-w-14 object-contain"
-            />
-            <h1 className="text-xl font-bold text-white">ERP System</h1>
-          </>
-        )}
-        <button
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          className="text-gray-300 hover:text-white"
-        >
-          <Menu size={24} />
-        </button>
-      </div>
-
+  {!isCollapsed && (
+    <>
+      <img
+        src="/logo.png"
+        alt="Logo"
+        className="h-auto w-auto max-h-14 max-w-14 object-contain"
+      />
+      <h1 className="text-xl font-bold text-white hidden sm:block whitespace-nowrap">ERP System</h1>  
+          
+    </>
+  )}
+  <button
+    onClick={() => setIsCollapsed(!isCollapsed)}
+    className="text-gray-300 hover:text-white"
+  >
+    <Menu size={24} />
+  </button>
+</div>
       {/* Navigation */}
       <nav className="flex-1 px-2 py-4 overflow-y-auto">
         {renderMenu(navigation)}

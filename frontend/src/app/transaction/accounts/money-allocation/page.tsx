@@ -12,6 +12,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import AllocateMoneyModal from "@/components/Modals/moneyAllocation/AllocateMoneyModal";
+import UploadDocumentMoneyAllocationModal from "@/components/Modals/moneyAllocation/UploadDocument";
+import VehicleCostModal from "@/components/Modals/moneyAllocation/costing";
 
 type RowData = {
   stockCode: string;
@@ -36,7 +38,7 @@ const data: RowData[] = [
     stockCode: "JP11132",
     carName: "2012 SUZUKI JIMNY",
     documents: "Upload",
-    chassis: "JB23W-672160",
+    chassis: "JB23W-672160", 
     reserveDays: 3,
     paid: 100,
     balance: 0,
@@ -51,7 +53,7 @@ const data: RowData[] = [
   },
   {
     stockCode: "JP11134",
-    carName: "2015 BMW 5 SERIES XG20", 
+    carName: "2015 BMW 5 SERIES XG20",
     documents: "Upload",
     chassis: "WBA5A3200DF799999",
     reserveDays: 3,
@@ -67,9 +69,9 @@ const data: RowData[] = [
     afterDue: 0
   },
   {
-    stockCode: "JP11135",
+    stockCode: "JP11135", 
     carName: "2018 TOYOTA CAMRY",
-    documents: "Upload", 
+    documents: "Upload",
     chassis: "4T1B11HK5JU123456",
     reserveDays: 5,
     paid: 75,
@@ -105,14 +107,14 @@ const data: RowData[] = [
 
 export default function MoneyAllocationPage() {
   const [modalOpen, setModalOpen] = useState<null | { type: string; row: RowData }>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   const openModal = (type: string, row: RowData) => {
     setModalOpen({ type, row });
   };
 
   const closeModal = () => setModalOpen(null);
-
-
 
   return (
     <div className="p-4 space-y-4">
@@ -188,7 +190,7 @@ export default function MoneyAllocationPage() {
                 <TableCell>
                   <button
                     className="text-blue-600 underline"
-                    onClick={() => openModal("Costing", row)}
+                      onClick={() => openModal("Costing", row)}
                   >
                     Costing
                   </button>
@@ -225,7 +227,7 @@ export default function MoneyAllocationPage() {
         </Table>
       </div>
 
-      {/* Modal */}
+      {/* Modals */}
       {modalOpen?.type === "Allocate Money" && (
         <AllocateMoneyModal
           isOpen={true}
@@ -255,6 +257,23 @@ export default function MoneyAllocationPage() {
           onAddAmount={(amt) => console.log("Amount added:", amt)}
         />
       )}
+
+      {modalOpen?.type === "Upload" && (
+        <UploadDocumentMoneyAllocationModal
+          isOpen={true}
+          onClose={closeModal}
+          onAddAmount={(amt) => console.log("Amount added:", amt)}
+        />
+      )}
+
+      {modalOpen?.type === "Costing" && (
+  <VehicleCostModal
+    isOpen={true}
+    onClose={closeModal}
+    vehicleId={modalOpen.row.stockCode}
+    vehicleName={modalOpen.row.carName}
+  />
+)}
     </div>
   );
 }
