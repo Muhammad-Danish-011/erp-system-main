@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import AllocateMoneyModal from "@/components/Modals/AllocateMoneyModal";
+import AllocateMoneyModal from "@/components/Modals/moneyAllocation/AllocateMoneyModal";
 
 type RowData = {
   stockCode: string;
