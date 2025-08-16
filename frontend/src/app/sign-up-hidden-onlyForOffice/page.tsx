@@ -69,7 +69,7 @@ const SignUp = () => {
       <div
       className="h-screen w-full flex items-center justify-center fixed inset-0"
       style={{
-        backgroundImage: `url('/erp.jpg')`,
+        backgroundImage: `url('/erp.png')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
