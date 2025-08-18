@@ -25,7 +25,6 @@ import {
   Anchor,
   Globe,
   Truck,
-  ClipboardList,
   PlusSquare,
   FileSpreadsheet,
   CreditCard,
@@ -35,6 +34,7 @@ import {
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+
   {
     name: "Master",
     href: "",
