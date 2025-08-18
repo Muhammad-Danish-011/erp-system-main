@@ -22,17 +22,18 @@ export default function FinanceVoucherForm() {
         <div className="space-y-4">
           <div className="flex items-center gap-3">
             <label className="w-32 text-sm font-medium">Voucher Code:</label>
-            <Input className="flex-1" />
+            <Input className="flex-1"
+            placeholder="Enter voucher code ..." />
           </div>
 
           <div className="flex items-center gap-3">
             <label className="w-32 text-sm font-medium">Amount:</label>
-            <Input type="number" className="flex-1" />
+            <Input type="number" className="flex-1" placeholder="Enter Amount ..." />
           </div>
 
           <div className="flex items-center gap-3">
             <label className="w-32 text-sm font-medium">Country:</label>
-            <select className="flex-1 h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+            <select className="flex-1 h-10 w-full rounded-md border border-input  px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
               <option value="">Please Select an Option</option>
               <option value="pk">Pakistan</option>
               <option value="jp">Japan</option>
@@ -42,7 +43,7 @@ export default function FinanceVoucherForm() {
 
           <div className="flex items-center gap-3">
             <label className="w-32 text-sm font-medium">Currency:</label>
-            <select className="flex-1 h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+            <select className="flex-1 h-10 w-full rounded-md border border-input px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
               <option value="">USD</option>
               <option value="usd">USD</option>
               <option value="eur">EUR</option>
@@ -52,12 +53,16 @@ export default function FinanceVoucherForm() {
 
           <div className="flex items-center gap-3">
             <label className="w-32 text-sm font-medium">Payer Name:</label>
-            <Input className="flex-1" />
+            <Input className="flex-1"
+            placeholder="Enter payer name ..."
+            />
           </div>
 
           <div className="flex items-center gap-3">
             <label className="w-32 text-sm font-medium">Customer:</label>
-            <Input className="flex-1" />
+            <Input className="flex-1" 
+            placeholder="Enter customer name ..."
+            />
           </div>
         </div>
 
@@ -65,7 +70,8 @@ export default function FinanceVoucherForm() {
         <div className="space-y-4">
           <div className="flex items-center gap-3">
             <label className="w-32 text-sm font-medium">Voucher Date:</label>
-            <Input type="date" className="flex-1" />
+            <Input type="date" className="flex-1" 
+            />
           </div>
 
           <div className="flex items-center gap-3">
@@ -75,7 +81,7 @@ export default function FinanceVoucherForm() {
 
           <div className="flex items-center gap-3">
             <label className="w-32 text-sm font-medium">Company:</label>
-            <select className="flex-1 h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+            <select className="flex-1 h-10 w-full rounded-md border border-input px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
               <option value="">Please Select an Option</option>
               <option value="toyota">Toyota</option>
               <option value="suzuki">Suzuki</option>
@@ -85,7 +91,7 @@ export default function FinanceVoucherForm() {
 
           <div className="flex items-center gap-3">
             <label className="w-32 text-sm font-medium">Bank:</label>
-            <select className="flex-1 h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+            <select className="flex-1 h-10 w-full rounded-md border border-input px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
               <option value="">Please Select an Option</option>
               <option value="hbl">HBL</option>
               <option value="ubl">UBL</option>
@@ -95,7 +101,9 @@ export default function FinanceVoucherForm() {
 
           <div className="flex items-center gap-3">
             <label className="w-32 text-sm font-medium">Cheque Number:</label>
-            <Input className="flex-1" />
+            <Input className="flex-1"
+            placeholder="Enter cheque number ..."
+            />
           </div>
         </div>
       </div>

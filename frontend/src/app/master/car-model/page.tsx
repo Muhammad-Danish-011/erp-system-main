@@ -147,7 +147,7 @@ function ModelsMaster() {
       {/* Table */}
       <div className="border border-gray-600 rounded-lg overflow-x-auto">
         <Table>
-          <TableHeader className="bg-gray-800 text-white">
+          <TableHeader className="">
             <TableRow>
               <TableHead className="w-24">ModelId</TableHead>
               <TableHead>Model Name</TableHead>
@@ -158,7 +158,7 @@ function ModelsMaster() {
           <TableBody>
             {models.map((model) => (
 
-              <TableRow key={model.id}  className="bg-white hover:bg-gray-100">
+              <TableRow key={model.id}  className="bg-white ">
                 <TableCell>{model.id}</TableCell>
                 <TableCell>
                   {editingId === model.id ? (

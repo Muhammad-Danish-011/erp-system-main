@@ -143,7 +143,7 @@ function optionsMaster() {
           />
         </div>
 
-        <div className="flex items-center gap-2 bg-white px-2 py-2 rounded h-min self-end">
+        <div className="flex items-center gap-2 bg-[#1f2937] px-2 py-2 rounded h-min self-end">
           <Checkbox
             id="isActive"
             checked={isActive}
@@ -151,7 +151,7 @@ function optionsMaster() {
           />
           <label
             htmlFor="isActive"
-            className="text-sm font-medium text-gray-900"
+            className="text-sm font-medium text-white"
           >
             Is Active
           </label>
@@ -162,7 +162,7 @@ function optionsMaster() {
       {/* Table */}
       <div className="border border-gray-600 rounded-lg overflow-x-auto">
         <Table>
-          <TableHeader className="bg-gray-800 text-white">
+          <TableHeader className="">
             <TableRow>
               <TableHead className="w-24">OptionId</TableHead>
               <TableHead>Option Name</TableHead>

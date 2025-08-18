@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export default function CarColorMaster() {
   const [colorName, setColorName] = useState("");
-  const [hexCode, setHexCode] = useState("#000000");
+  const [hexCode, setHexCode] = useState("#FFE4C9");
   const [isActive, setIsActive] = useState(true);
   const [colors, setColors] = useState([
     { id: 1, name: "Beige", hex: "#FFE4C9", active: true },
@@ -97,7 +97,7 @@ export default function CarColorMaster() {
       {/* Table */}
       <div className="overflow-x-auto border border-gray-300 rounded">
         <table className="min-w-full text-sm">
-          <thead className="bg-gray-200 text-left">
+          <thead className=" text-left">
             <tr>
               <th className="px-4 py-2 border">Color ID</th>
               <th className="px-4 py-2 border">Color Name</th>

@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@layer base {
+  input:not([type='checkbox']):not([type='radio']),
+  select,
+  textarea {
+    @apply bg-gray-800 text-white border border-gray-600 ;
+  }
+
+   input::placeholder,
+  textarea::placeholder {
+    @apply text-white;
+  }
+    /* Date input calendar icon styling */
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1); /* 👈 White bana dega */
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    cursor: pointer;
+    filter: invert(1) brightness(1.2); /* Hover pe thoda bright */
+  }
+}
+
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -22,4 +46,14 @@ body {
 
 .custom_scrollbar_hidden::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Edge */
+}
+
+@media only screen and (max-width: 1024px) and (min-width: 375px) {
+.hot_location_custom_overflow{
+
+display: block;
+width: 70px;
+height: 70px;
+overflow: auto;
+}
 }

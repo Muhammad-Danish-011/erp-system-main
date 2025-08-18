@@ -50,7 +50,7 @@ export default function AgentModule() {
                     <div className="p-2 border-b">
                         <input
                             type="text"
-                            placeholder="Enter text to search"
+                            placeholder="Enter text to search ..."
                             className="w-full border rounded px-2 py-1"
                         />
                     </div>

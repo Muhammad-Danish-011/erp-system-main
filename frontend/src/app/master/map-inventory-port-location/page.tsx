@@ -127,9 +127,9 @@ function App() {
         <Button onClick={handleClear} className="bg-gray-500 hover:bg-gray-600 text-white">Clear</Button>
       </div>
       {/* Country Table */}
-      <div className="flex gap-4">
+      <div className="flex gap-4 flex-wrap">
         <div className="bg-white p-4 rounded-lg shadow flex-1">
-          <h2 className="text-2xl font-semibold mb-4">Set Inventory and Hot Location for Countries</h2>
+          <h2 className="text-2xl font-semibold mb-4 h-[39px] overflow-y-auto">Set Inventory and Hot Location for Countries</h2>
           <Input
             placeholder="Search countries..."
             value={searchCountry}
@@ -168,7 +168,7 @@ function App() {
 
         {/* Inventory Locations Table */}
         <div className="bg-white p-4 rounded-lg shadow flex-1">
-          <h2 className="text-2xl font-semibold mb-4">Inventory Locations</h2>
+          <h2 className="text-2xl font-semibold mb-4 h-[39px] overflow-y-auto">Inventory Locations</h2>
           <Input
             placeholder="Search country..."
             value={searchInventory}
@@ -193,7 +193,7 @@ function App() {
 
         {/* Hot Locations Table */}
         <div className="bg-white p-4 rounded-lg shadow flex-1">
-          <h2 className="text-2xl font-semibold mb-4">Hot Locations</h2>
+          <h2 className="text-2xl font-semibold mb-4 h-[39px] overflow-y-auto">Hot Locations</h2>
           <Input
             placeholder="Search hot location..."
             value={searchHot}

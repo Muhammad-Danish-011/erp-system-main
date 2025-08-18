@@ -92,7 +92,7 @@ function VehicleCategoryMaster() {
         </Button>
       </div>
 
-      <div className="flex items-center gap-4 mb-6">
+      <div className="flex items-end gap-4 mb-6">
         <div className="flex-1">
           <label className="block text-sm font-medium mb-1 text-white">Category Name:</label>
           <Input

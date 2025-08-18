@@ -1,5 +1,14 @@
 "use client";
 import { useState } from "react";
+import {
+  Table,
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+} from "@/components/ui/table"
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function CountryPortMapping() {
   const [country, setCountry] = useState("");
@@ -57,7 +66,7 @@ export default function CountryPortMapping() {
         <select
           value={country}
           onChange={(e) => setCountry(e.target.value)}
-          className="border border-gray-300 rounded px-3 py-2"
+          className="border border-gray-300 rounded px-3 py-2 w-64"
         >
           <option value="">Please Select an Option</option>
           <option value="Tanzania">Tanzania</option>
@@ -70,7 +79,7 @@ export default function CountryPortMapping() {
         <select
           value={port}
           onChange={(e) => setPort(e.target.value)}
-          className="border border-gray-300 rounded px-3 py-2"
+          className="border border-gray-300 rounded px-3 py-2 w-64"
         >
           <option value="">Please Select an Option</option>
           <option value="Dar es Salaam">Dar es Salaam</option>
@@ -90,26 +99,27 @@ export default function CountryPortMapping() {
 
       {/* Table */}
       <div className="overflow-x-auto border border-gray-300 rounded">
-        <table className="min-w-full text-sm">
-          <thead className="bg-gray-200 text-left">
-            <tr>
-              <th className="px-4 py-2 border">Country</th>
-              <th className="px-4 py-2 border">Port</th>
-              <th className="px-4 py-2 border">Active</th>
-            </tr>
-          </thead>
-          <tbody>
-            {mappings.map((row) => (
-              <tr key={row.id} className="hover:bg-gray-50">
-                <td className="px-4 py-2 border">{row.country}</td>
-                <td className="px-4 py-2 border">{row.port}</td>
-                <td className="px-4 py-2 border text-center">
-                  <input type="checkbox" checked={row.active} readOnly />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+
+          <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Country</TableHead>
+          <TableHead>Port</TableHead>
+          <TableHead className="text-center">Active</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {mappings.map((row) => (
+          <TableRow key={row.id} className="hover:bg-gray-50">
+            <TableCell>{row.country}</TableCell>
+            <TableCell>{row.port}</TableCell>
+            <TableCell className="text-center">
+              <Checkbox checked={row.active} disabled />
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
       </div>
     </div>
   );

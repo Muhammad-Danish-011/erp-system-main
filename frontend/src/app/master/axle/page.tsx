@@ -1,5 +1,14 @@
 "use client";
 import { useState } from "react";
+import {
+  Table,
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+} from "@/components/ui/table"
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function VehicleAxleMaster() {
   const [axleName, setAxleName] = useState("");
@@ -48,6 +57,7 @@ export default function VehicleAxleMaster() {
           value={axleName}
           onChange={(e) => setAxleName(e.target.value)}
           className="border border-gray-300 rounded px-3 py-2"
+          placeholder="Enter axle name..."
         />
         <label className="flex items-center gap-2">
           <input type="checkbox" checked={isActive} onChange={(e) => setIsActive(e.target.checked)} />
@@ -57,26 +67,26 @@ export default function VehicleAxleMaster() {
 
       {/* Table */}
       <div className="overflow-x-auto border border-gray-300 rounded">
-        <table className="min-w-full text-sm">
-          <thead className="bg-gray-200 text-left">
-            <tr>
-              <th className="px-4 py-2 border">Axle ID</th>
-              <th className="px-4 py-2 border">Axle</th>
-              <th className="px-4 py-2 border">Active</th>
-            </tr>
-          </thead>
-          <tbody>
-            {axles.map((row) => (
-              <tr key={row.id} className="hover:bg-gray-50">
-                <td className="px-4 py-2 border">{row.id}</td>
-                <td className="px-4 py-2 border">{row.name}</td>
-                <td className="px-4 py-2 border text-center">
-                  <input type="checkbox" checked={row.active} readOnly />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Axle ID</TableHead>
+          <TableHead>Axle</TableHead>
+          <TableHead className="text-center">Active</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {axles.map((row) => (
+          <TableRow key={row.id} className="hover:bg-gray-50">
+            <TableCell>{row.id}</TableCell>
+            <TableCell>{row.name}</TableCell>
+            <TableCell className="text-center">
+              <Checkbox checked={row.active} disabled />
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
       </div>
     </div>
   );

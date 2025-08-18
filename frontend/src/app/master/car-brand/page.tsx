@@ -159,6 +159,9 @@ export default function CarBrandPage() {
           onChange={(e) => setSearch(e.target.value)}
           className="mb-4 w-64"
         />
+<div className="overflow-x-auto">
+
+
 
         <Table>
           <TableHeader>
@@ -196,6 +199,7 @@ export default function CarBrandPage() {
             ))}
           </TableBody>
         </Table>
+        </div>
       </div>
     </div>
   );

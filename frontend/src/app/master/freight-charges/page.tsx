@@ -1,5 +1,14 @@
 "use client";
 import { useState } from "react";
+import {
+  Table,
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+} from "@/components/ui/table"
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function FreightChargeMaster() {
   const [vehicleType, setVehicleType] = useState("");
@@ -95,12 +104,18 @@ export default function FreightChargeMaster() {
 
         <div>
           <label className="text-sm font-medium">Port:</label>
-          <input value={port} onChange={(e) => setPort(e.target.value)} className="border border-gray-300 rounded px-3 py-2 w-full" />
+          <input value={port} onChange={(e) => setPort(e.target.value)} 
+          className="border border-gray-300 rounded px-3 py-2 w-full"
+          placeholder="Enter port name"
+          />
         </div>
 
         <div>
           <label className="text-sm font-medium">Freight Charge:</label>
-          <input type="number" value={freightCharge} onChange={(e) => setFreightCharge(e.target.value)} className="border border-gray-300 rounded px-3 py-2 w-full" />
+          <input type="number" value={freightCharge} onChange={(e) => setFreightCharge(e.target.value)} 
+          className="border border-gray-300 rounded px-3 py-2 w-full" 
+            placeholder="Enter freight charge"
+          />
         </div>
 
         <div className="flex items-center gap-2 mt-6">
@@ -114,32 +129,34 @@ export default function FreightChargeMaster() {
 
       {/* Table */}
       <div className="overflow-x-auto border border-gray-300 rounded">
-        <table className="min-w-full text-sm">
-          <thead className="bg-gray-200 text-left">
-            <tr>
-              <th className="px-4 py-2 border">Vehicle Type</th>
-              <th className="px-4 py-2 border">Source Country</th>
-              <th className="px-4 py-2 border">Destination Country</th>
-              <th className="px-4 py-2 border">Port Name</th>
-              <th className="px-4 py-2 border">Charges</th>
-              <th className="px-4 py-2 border">Active</th>
-            </tr>
-          </thead>
-          <tbody>
-            {charges.map((row) => (
-              <tr key={row.id} className="hover:bg-gray-50">
-                <td className="px-4 py-2 border">{row.type}</td>
-                <td className="px-4 py-2 border">{row.source}</td>
-                <td className="px-4 py-2 border">{row.dest}</td>
-                <td className="px-4 py-2 border">{row.port}</td>
-                <td className="px-4 py-2 border">{row.charge}</td>
-                <td className="px-4 py-2 border text-center">
-                  <input type="checkbox" checked={row.active} readOnly />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+
+
+         <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Vehicle Type</TableHead>
+          <TableHead>Source Country</TableHead>
+          <TableHead>Destination Country</TableHead>
+          <TableHead>Port Name</TableHead>
+          <TableHead>Charges</TableHead>
+          <TableHead className="text-center">Active</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {charges.map((row) => (
+          <TableRow key={row.id} className="hover:bg-gray-50">
+            <TableCell>{row.type}</TableCell>
+            <TableCell>{row.source}</TableCell>
+            <TableCell>{row.dest}</TableCell>
+            <TableCell>{row.port}</TableCell>
+            <TableCell>{row.charge}</TableCell>
+            <TableCell className="text-center">
+              <Checkbox checked={row.active} disabled />
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
       </div>
     </div>
   );

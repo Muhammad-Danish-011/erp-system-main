@@ -1,5 +1,14 @@
 "use client";
 import { useState } from "react";
+import {
+  Table,
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+} from "@/components/ui/table"
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function PortMaster() {
   const [portName, setPortName] = useState("");
@@ -80,28 +89,29 @@ export default function PortMaster() {
 
       {/* Table */}
       <div className="overflow-x-auto border border-gray-300 rounded">
-        <table className="min-w-full text-sm">
-          <thead className="bg-gray-200 text-left">
-            <tr>
-              <th className="px-4 py-2 border">Port ID</th>
-              <th className="px-4 py-2 border">Port Name</th>
-              <th className="px-4 py-2 border">Insurance Cost</th>
-              <th className="px-4 py-2 border">Active</th>
-            </tr>
-          </thead>
-          <tbody>
-            {ports.map((port) => (
-              <tr key={port.id} className="hover:bg-gray-50">
-                <td className="px-4 py-2 border">{port.id}</td>
-                <td className="px-4 py-2 border">{port.name}</td>
-                <td className="px-4 py-2 border">{port.insurance}</td>
-                <td className="px-4 py-2 border text-center">
-                  <input type="checkbox" checked={port.active} readOnly />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      
+         <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Port ID</TableHead>
+          <TableHead>Port Name</TableHead>
+          <TableHead>Insurance Cost</TableHead>
+          <TableHead className="text-center">Active</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {ports.map((port) => (
+          <TableRow key={port.id}>
+            <TableCell>{port.id}</TableCell>
+            <TableCell>{port.name}</TableCell>
+            <TableCell>{port.insurance}</TableCell>
+            <TableCell className="text-center">
+              <Checkbox checked={port.active} disabled />
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
       </div>
     </div>
   );

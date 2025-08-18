@@ -93,13 +93,13 @@ function InspectionCostMapping() {
         <Button onClick={handleClear} className="bg-gray-500 hover:bg-gray-600 text-white">Clear</Button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 bg-gray-100 p-4 rounded-lg">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4 bg-gray-100 p-4 rounded-lg">
         <div className="flex flex-col">
           <label className="text-sm font-medium">Source Country</label>
           <select 
             value={sourceCountry} 
             onChange={(e) => setSourceCountry(e.target.value)}
-            className="w-56 border border-gray-300 rounded-md p-2"
+            className="w-56 border border-gray-300 rounded-md p-2 w-full"
           >
             <option value="">All Countries</option>
             {uniqueSourceCountries.map(country => (
@@ -113,7 +113,7 @@ function InspectionCostMapping() {
           <select
             value={destinationCountry}
             onChange={(e) => setDestinationCountry(e.target.value)}
-            className="w-56 border border-gray-300 rounded-md p-2"
+            className="w-56 border border-gray-300 rounded-md p-2 w-full"
           >
             <option value="">All Countries</option>
             {uniqueDestinationCountries.map(country => (
@@ -123,20 +123,22 @@ function InspectionCostMapping() {
         </div>
 
         <div>
-          <h3 className="font-semibold mb-2">Search Source</h3>
+          <h3 className="text-sm font-medium ">Search Source</h3>
           <Input
             placeholder="Search source..."
             value={searchSource}
             onChange={(e) => setSearchSource(e.target.value)}
+            className='w-full'
           />
         </div>
 
         <div>
-          <h3 className="font-semibold mb-2">Search Destination</h3>
+          <h3 className="text-sm font-medium">Search Destination</h3>
           <Input
             placeholder="Search destination..."
             value={searchDestination}
             onChange={(e) => setSearchDestination(e.target.value)}
+            className='w-full'
           />
         </div>
       </div>
@@ -152,12 +154,12 @@ function InspectionCostMapping() {
 
       <Table className="w-full border-collapse border border-gray-200">
         <TableHeader>
-          <TableRow className="bg-gray-50">
-            <TableHead className="py-3 px-4 text-left font-medium text-gray-600 border-b">Source Country</TableHead>
-            <TableHead className="py-3 px-4 text-left font-medium text-gray-600 border-b">Destination Country</TableHead>
-            <TableHead className="py-3 px-4 text-left font-medium text-gray-600 border-b">Inspection Cost</TableHead>
-            <TableHead className="py-3 px-4 text-left font-medium text-gray-600 border-b">Active</TableHead>
-            <TableHead className="py-3 px-4 text-left font-medium text-gray-600 border-b">Hot Locations</TableHead>
+          <TableRow className="">
+            <TableHead className="py-3 px-4 text-left  border-b">Source Country</TableHead>
+            <TableHead className="py-3 px-4 text-left  border-b">Destination Country</TableHead>
+            <TableHead className="py-3 px-4 text-left  border-b">Inspection Cost</TableHead>
+            <TableHead className="py-3 px-4 text-left  border-b">Active</TableHead>
+            <TableHead className="py-3 px-4 text-left  border-b">Hot Locations</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -182,8 +184,9 @@ function InspectionCostMapping() {
                 />
               </TableCell>
               <TableCell className="py-2 px-4 border-b border-gray-200">
-                <div className="flex items-center justify-between flex-wrap gap-1">
-                  <span>{item.hotLocations.join(", ") || "—"}</span>
+                {/* <div className="flex items-center justify-between flex-wrap gap-1"> */}
+                <div className="flex items-center justify-between gap-1">
+                  <span className='hot_location_custom_overflow' >{item.hotLocations.join(", ") || "—"}</span>
                   {editingLocation === `${item.source}-${item.destination}` ? (
                     <div className="flex gap-1">
                       <Input
