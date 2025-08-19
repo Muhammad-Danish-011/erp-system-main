@@ -166,59 +166,56 @@ export function Sidebar() {
 
   return (
     <div
+  className={cn(
+    "flex flex-col bg-gray-900 transition-all duration-300 h-screen sticky top-0 overflow-hidden",
+    isCollapsed ? "w-16" : "w-64"
+  )}
+>
+  {/* Header */}
+  <div className="flex h-16 items-center justify-between border-b border-gray-800 px-4 overflow-hidden">
+    {!isCollapsed && (
+      <>
+        <img
+          src="/logo.png"
+          alt="Logo"
+          className="h-auto w-auto max-h-14 max-w-14 object-contain"
+        />
+        <h1 className="text-xl font-bold text-white hidden sm:block whitespace-nowrap">ERP System</h1>
+      </>
+    )}
+    <button
+      onClick={() => setIsCollapsed(!isCollapsed)}
+      className="text-gray-300 hover:text-white"
+    >
+      <Menu size={24} />
+    </button>
+  </div>
+  {/* Navigation */}
+  <nav className="flex-1 px-2 py-4 overflow-y-auto overflow-x-hidden">
+    {renderMenu(navigation)}
+  </nav>
+
+  {/* Settings */}
+  <div className="border-t border-gray-800 px-2 py-4">
+    <Link
+      href={settingsNav.href}
       className={cn(
-        // "flex h-full flex-col bg-gray-900 transition-all duration-300",
-        "flex flex-col bg-gray-900 transition-all duration-300",
-        isCollapsed ? "w-16" : "w-64"
+        "group flex items-center rounded-md px-2 py-2 text-sm font-medium",
+        pathname.startsWith(settingsNav.href)
+          ? "bg-gray-800 text-white"
+          : "text-gray-300 hover:bg-gray-700 hover:text-white"
       )}
     >
-      {/* Header */}
-      <div className="flex h-16 items-center justify-between border-b border-gray-800 px-4">
-  {!isCollapsed && (
-    <>
-      <img
-        src="/logo.png"
-        alt="Logo"
-        className="h-auto w-auto max-h-14 max-w-14 object-contain"
+      <settingsNav.icon
+        className={cn(
+          "mr-3 h-5 w-5 flex-shrink-0",
+          pathname.startsWith(settingsNav.href)
+            ? "text-white"
+            : "text-gray-400 group-hover:text-gray-300"
+        )}
       />
-      <h1 className="text-xl font-bold text-white hidden sm:block whitespace-nowrap">ERP System</h1>  
-          
-    </>
-  )}
-  <button
-    onClick={() => setIsCollapsed(!isCollapsed)}
-    className="text-gray-300 hover:text-white"
-  >
-    <Menu size={24} />
-  </button>
+      {!isCollapsed && settingsNav.name}
+    </Link>
+  </div>
 </div>
-      {/* Navigation */}
-      <nav className="flex-1 px-2 py-4 overflow-y-auto custom_scrollbar_hidden">
-        {renderMenu(navigation)}
-      </nav>
-
-      {/* Settings */}
-      <div className="border-t border-gray-800 px-2 py-4">
-        <Link
-          href={settingsNav.href}
-          className={cn(
-            "group flex items-center rounded-md px-2 py-2 text-sm font-medium",
-            pathname.startsWith(settingsNav.href)
-              ? "bg-gray-800 text-white"
-              : "text-gray-300 hover:bg-gray-700 hover:text-white"
-          )}
-        >
-          <settingsNav.icon
-            className={cn(
-              "mr-3 h-5 w-5 flex-shrink-0",
-              pathname.startsWith(settingsNav.href)
-                ? "text-white"
-                : "text-gray-400 group-hover:text-gray-300"
-            )}
-          />
-          {!isCollapsed && settingsNav.name}
-        </Link>
-      </div>
-    </div>
-  );
-}
+  )}
