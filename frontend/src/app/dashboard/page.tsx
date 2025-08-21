@@ -13,9 +13,15 @@ import {
 const stats = [
   { name: "Total Products", value: "120", icon: Package, change: "+4.75%", changeType: "positive" },
   { name: "Active Customers", value: "450", icon: Users, change: "+10.18%", changeType: "positive" },
+  // { name: "Pending Orders", value: "23", icon: ShoppingCart, change: "-2.35%", changeType: "negative" },
+  // { name: "Active Suppliers", value: "35", icon: Truck, change: "0.00%", changeType: "neutral" },
+];
+
+const statsMore = [
   { name: "Pending Orders", value: "23", icon: ShoppingCart, change: "-2.35%", changeType: "negative" },
   { name: "Active Suppliers", value: "35", icon: Truck, change: "0.00%", changeType: "neutral" },
-];
+
+]
 
 const alerts = [
   { title: "Low Stock Alert", description: "5 products are running low on stock", icon: AlertCircle, type: "warning" },
@@ -31,6 +37,45 @@ export default function DashboardPage() {
       <AnalogClock timezone="Asia/Dubai" label="Dubai Time" />
 
       {stats.map((stat) => (
+        <div
+  key={stat.name}
+  className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6 flex justify-start lg:justify-center items-center"
+>
+  <div className="flex items-center space-x-4">
+    <div className="flex-shrink-0">
+      <stat.icon className="h-6 w-6 text-gray-400" aria-hidden="true" />
+    </div>
+    <div>
+      <dl className="text-center">
+        <dt className="truncate text-sm font-medium text-gray-500">
+          {stat.name}
+        </dt>
+        <dd className="flex items-baseline justify-center">
+          <div className="text-2xl font-semibold text-gray-900">
+            {stat.value}
+          </div>
+          <div
+            className={`ml-2 flex items-baseline text-sm font-semibold ${
+              stat.changeType === "positive"
+                ? "text-green-600"
+                : stat.changeType === "negative"
+                ? "text-red-600"
+                : "text-gray-500"
+            }`}
+          >
+            {stat.change}
+          </div>
+        </dd>
+      </dl>
+    </div>
+  </div>
+</div>
+      ))}
+    </div>
+
+  <div className="grid gap-6 sm:grid-cols-2">
+
+      {statsMore.map((stat) => (
         <div
           key={stat.name}
           className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6"
@@ -65,7 +110,9 @@ export default function DashboardPage() {
           </div>
         </div>
       ))}
-    </div>
+    
+  </div>
+
 
     {/* Alerts */}
     <div className="grid gap-6 sm:grid-cols-2">

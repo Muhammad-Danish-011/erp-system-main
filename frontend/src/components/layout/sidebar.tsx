@@ -167,7 +167,7 @@ export function Sidebar() {
   return (
     <div
   className={cn(
-    "flex flex-col bg-gray-900 transition-all duration-300 h-screen sticky top-0 overflow-hidden",
+    "flex flex-col bg-gray-900 transition-all duration-300 h-screen sticky top-0 overflow-hidden ",
     isCollapsed ? "w-16" : "w-64"
   )}
 >
@@ -191,7 +191,7 @@ export function Sidebar() {
     </button>
   </div>
   {/* Navigation */}
-  <nav className="flex-1 px-2 py-4 overflow-y-auto overflow-x-hidden">
+  <nav className="flex-1 px-2 py-4 overflow-y-auto overflow-x-hidden custom_scrollbar_hidden">
     {renderMenu(navigation)}
   </nav>
 
