@@ -76,7 +76,8 @@ export default function CustomerApprovalPage() {
 
   return (
       <div className="flex">
-        <main className="flex-1 p-8">
+        <main className="flex-1">
+         <h1 className="text-3xl font-bold text-center mb-8 text-white">New Customer Approval</h1>
           <div className="bg-white rounded-lg shadow-lg">
             {/* Header */}
             <div className="px-6 py-4 border-b">

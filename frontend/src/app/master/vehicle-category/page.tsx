@@ -74,7 +74,7 @@ function VehicleCategoryMaster() {
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold text-center mb-8 text-white">Vehicle Category Master</h1>
+      <h1 className="text-3xl font-bold text-center mb-4 text-white">Vehicle Category </h1>
 
       <div className="flex gap-2 mb-6">
         <Button onClick={handleSave} className="bg-blue-600 hover:bg-blue-700">
@@ -101,13 +101,13 @@ function VehicleCategoryMaster() {
             placeholder="Enter category name"
           />
         </div><br /><br /><br />
-        <div className="flex items-center gap-2 bg-white p-2 rounded">
+        <div className="flex items-center gap-2 p-2 rounded w-[250px] border border-gray-600 bg-[#1f2937] text-white">
           <Checkbox
             id="isActive"
             checked={isActive}
             onCheckedChange={() => setIsActive(!isActive)}
           />
-          <label htmlFor="isActive" className="text-sm font-medium text-gray-900">
+          <label htmlFor="isActive" className="text-sm font-medium ">
             Is Active
           </label>
         </div>

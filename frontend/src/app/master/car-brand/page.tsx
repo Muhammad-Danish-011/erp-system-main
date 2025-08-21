@@ -97,6 +97,7 @@ export default function CarBrandPage() {
   return (
     <div className="space-y-6">
       {/* Actions */}
+      <h1 className="text-3xl font-bold text-center mb-8 text-white">Car Brands</h1>
       <div className="flex items-center gap-2 bg-white p-4 rounded-lg shadow">
         <Button onClick={handleSave} className="bg-blue-500 hover:bg-blue-600 text-white">
           {selectedBrand ? "Update" : "Save"}
@@ -139,7 +140,7 @@ export default function CarBrandPage() {
           />
         </div>
 
-        <div className="flex items-center gap-2 mt-6">
+        <div className="flex items-center gap-2 mt-6 bg-[#1f2937] text-white w-[250px] p-2 rounded border border-gray-600">
           <Checkbox
             id="isActive"
             checked={isActive}

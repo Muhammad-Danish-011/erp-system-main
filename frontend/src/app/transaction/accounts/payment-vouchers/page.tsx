@@ -7,6 +7,8 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@
 
 export default function FinanceVoucherForm() {
   return (
+    <>
+        <h1 className="text-3xl font-bold text-center mb-8 text-white">Payment Vouchers</h1>
     <div className="p-6 max-w-5xl mx-auto border rounded-lg shadow bg-white">
       {/* Top Buttons */}
       <div className="flex gap-3 mb-6">
@@ -17,7 +19,7 @@ export default function FinanceVoucherForm() {
       </div>
 
       {/* Form Layout */}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Left Side */}
         <div className="space-y-4">
           <div className="flex items-center gap-3">
@@ -108,5 +110,6 @@ export default function FinanceVoucherForm() {
         </div>
       </div>
     </div>
+     </>
   );
 }

@@ -2,7 +2,14 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 
@@ -36,7 +43,8 @@ function ModelsMaster() {
 
   const handleSave = () => {
     if (modelName.trim()) {
-      const newId = models.length > 0 ? Math.max(...models.map((m) => m.id)) + 1 : 1;
+      const newId =
+        models.length > 0 ? Math.max(...models.map((m) => m.id)) + 1 : 1;
       setModels([...models, { id: newId, name: modelName, active: isActive }]);
       setModelName("");
     }
@@ -44,7 +52,11 @@ function ModelsMaster() {
 
   const handleUpdate = () => {
     if (editingId !== null && editModelName.trim()) {
-      setModels(models.map((model) => (model.id === editingId ? { ...model, name: editModelName } : model)));
+      setModels(
+        models.map((model) =>
+          model.id === editingId ? { ...model, name: editModelName } : model
+        )
+      );
       setEditingId(null);
       setEditModelName("");
     }
@@ -73,11 +85,14 @@ function ModelsMaster() {
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6 text-white">Models Master</h1>
+      <h1 className="text-2xl font-bold mb-6 text-white text-center">Models Master</h1>
 
       {/* Action Buttons */}
       <div className="flex flex-wrap gap-2 mb-6">
-        <Button onClick={handleSave} className="bg-blue-600 hover:bg-blue-700 text-white">
+        <Button
+          onClick={handleSave}
+          className="bg-blue-600 hover:bg-blue-700 text-white"
+        >
           Save
         </Button>
         <Button
@@ -87,61 +102,92 @@ function ModelsMaster() {
         >
           Update
         </Button>
-        <Button onClick={handleClear} className="bg-gray-600 hover:bg-gray-700 text-white">
+        <Button
+          onClick={handleClear}
+          className="bg-gray-600 hover:bg-gray-700 text-white"
+        >
           Clear
         </Button>
       </div>
 
       {/* Input Fields */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-col-4 xl:grid-cols-4 gap-4 mb-6">
         <div>
-          <label className="block text-sm font-medium mb-1 text-white">Vehicle Type:</label>
-          <select 
-            value={vehicleType} 
+          <label className="block text-sm font-medium mb-1 text-white">
+            Vehicle Type:
+          </label>
+          <select
+            value={vehicleType}
             onChange={(e) => setVehicleType(e.target.value)}
             className="w-full bg-gray-800 text-white border-gray-600 rounded-md p-2"
           >
             <option value="">Not Selected</option>
             {vehicleTypes.map((type) => (
-              <option key={type} value={type}>{type}</option>
+              <option key={type} value={type}>
+                {type}
+              </option>
             ))}
           </select>
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1 text-white">Select Car Make:</label>
+          <label className="block text-sm font-medium mb-1 text-white">
+            Select Car Make:
+          </label>
           <select
             value={carMake}
-            onChange={(e) => setCarMake(e.target.value)} 
+            onChange={(e) => setCarMake(e.target.value)}
             className="w-full bg-gray-800 text-white border-gray-600 rounded-md p-2"
           >
             <option value="">Not Selected</option>
             {carMakes.map((make) => (
-              <option key={make} value={make}>{make}</option>
+              <option key={make} value={make}>
+                {make}
+              </option>
             ))}
           </select>
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1 text-white">Model Name:</label>
+          <label className="block text-sm font-medium mb-1 text-white">
+            Model Name:
+          </label>
           <div className="flex gap-2">
             <Input
               value={modelName}
               onChange={(e) => setModelName(e.target.value)}
               placeholder="Enter model name"
             />
-                <div className="flex items-center gap-2 bg-white p-2 rounded">
-                     <Checkbox
-                       id="isActive"
-                       checked={isActive}
-                       onCheckedChange={() => setIsActive(!isActive)}
-                     />
-                     <label htmlFor="isActive" className="text-sm font-medium text-gray-900">
-                       Is Active
-                     </label>
-                   </div>
+            {/* <div className="flex items-center gap-2 bg-white p-2 rounded">
+              <Checkbox
+                id="isActive"
+                checked={isActive}
+                onCheckedChange={() => setIsActive(!isActive)}
+              />
+              <label
+                htmlFor="isActive"
+                className="text-sm font-medium text-gray-900"
+              >
+                Is Active
+              </label>
+            </div> */}
           </div>
         </div>
+
+         <div className="flex items-center gap-2 p-2 rounded mt-6 bg-[#1f2937] border border-gray-600 ">
+              <Checkbox
+                id="isActive"
+                checked={isActive}
+                onCheckedChange={() => setIsActive(!isActive)}
+              />
+              <label
+                htmlFor="isActive"
+                className="text-sm font-medium text-white"
+              >
+                Is Active
+              </label>
+            </div>
       </div>
 
       {/* Table */}
@@ -157,8 +203,7 @@ function ModelsMaster() {
           </TableHeader>
           <TableBody>
             {models.map((model) => (
-
-              <TableRow key={model.id}  className="bg-white ">
+              <TableRow key={model.id} className="bg-white ">
                 <TableCell>{model.id}</TableCell>
                 <TableCell>
                   {editingId === model.id ? (
@@ -175,7 +220,11 @@ function ModelsMaster() {
                   <Checkbox
                     checked={model.active}
                     onCheckedChange={() => {
-                      setModels(models.map((m) => (m.id === model.id ? { ...m, active: !m.active } : m)));
+                      setModels(
+                        models.map((m) =>
+                          m.id === model.id ? { ...m, active: !m.active } : m
+                        )
+                      );
                     }}
                   />
                 </TableCell>
@@ -189,7 +238,11 @@ function ModelsMaster() {
                       >
                         Save
                       </Button>
-                      <Button onClick={cancelEditing} size="sm" variant="outline">
+                      <Button
+                        onClick={cancelEditing}
+                        size="sm"
+                        variant="outline"
+                      >
                         Cancel
                       </Button>
                     </>

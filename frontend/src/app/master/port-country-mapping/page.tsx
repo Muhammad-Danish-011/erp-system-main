@@ -7,8 +7,9 @@ import {
   TableHead,
   TableBody,
   TableCell,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
 
 export default function CountryPortMapping() {
   const [country, setCountry] = useState("");
@@ -33,6 +34,8 @@ export default function CountryPortMapping() {
   };
 
   return (
+ <>
+      <h1 className="text-3xl font-bold text-center mb-8 text-white">Port Country Mapping</h1>
     <div className="p-6 bg-white rounded-lg shadow-lg max-w-4xl mx-auto">
       {/* Buttons */}
       <div className="flex gap-2 mb-4">
@@ -61,66 +64,77 @@ export default function CountryPortMapping() {
       </div>
 
       {/* Form */}
-      <div className="flex items-center gap-4 mb-4">
-        <label className="text-sm font-medium">Select Country:</label>
-        <select
-          value={country}
-          onChange={(e) => setCountry(e.target.value)}
-          className="border border-gray-300 rounded px-3 py-2 w-64"
-        >
-          <option value="">Please Select an Option</option>
-          <option value="Tanzania">Tanzania</option>
-          <option value="Uganda">Uganda</option>
-          <option value="Oman">Oman</option>
-          <option value="Iran">Iran</option>
-        </select>
 
-        <label className="text-sm font-medium">Select Port:</label>
-        <select
-          value={port}
-          onChange={(e) => setPort(e.target.value)}
-          className="border border-gray-300 rounded px-3 py-2 w-64"
-        >
-          <option value="">Please Select an Option</option>
-          <option value="Dar es Salaam">Dar es Salaam</option>
-          <option value="Salalah">Salalah</option>
-          <option value="Jebel Ali">Jebel Ali</option>
-        </select>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4  py-4 rounded-lg">
+        <div className="flex flex-col">
+          <label className="text-sm font-medium">Select Country :</label>
+          <select
+            // value={sourceCountry}
+            // onChange={(e) => setSourceCountry(e.target.value)}
+            className="border border-gray-300 rounded-md p-2 w-full"
+          >
+            <option value="">Please Select an Option</option>
+            <option value="Tanzania">Tanzania</option>
+            <option value="Uganda">Uganda</option>
+            <option value="Oman">Oman</option>
+            <option value="Iran">Iran</option>
+            {/* {uniqueSourceCountries.map(country => (
+              <option key={country} value={country}>{country}</option>
+            ))} */}
+          </select>
+        </div>
 
-        <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
+        <div className="flex flex-col">
+          <label className="text-sm font-medium">Select Port :</label>
+          <select
+            // value={destinationCountry}
+            // onChange={(e) => setDestinationCountry(e.target.value)}
+            className="border border-gray-300 rounded-md p-2 w-full"
+          >
+            <option value="">Please Select an Option</option>
+            <option value="Dar es Salaam">Dar es Salaam</option>
+            <option value="Salalah">Salalah</option>
+            <option value="Jebel Ali">Jebel Ali</option>
+            {/* {uniqueDestinationCountries.map(country => (
+              <option key={country} value={country}>{country}</option>
+            ))} */}
+          </select>
+        </div>
+
+        <div className="bg-[#1f2937] text-white rounded flex items-center gap-2 p-2 mt-1 sm:mt-5">
+          <Checkbox
             checked={isActive}
-            onChange={(e) => setIsActive(e.target.checked)}
+            onCheckedChange={() => setIsActive(!isActive)}
+            className="mr-2"
           />
-          Is Active
-        </label>
+          <span>Active Only</span>
+        </div>
       </div>
 
       {/* Table */}
       <div className="overflow-x-auto border border-gray-300 rounded">
-
-          <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Country</TableHead>
-          <TableHead>Port</TableHead>
-          <TableHead className="text-center">Active</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {mappings.map((row) => (
-          <TableRow key={row.id} className="hover:bg-gray-50">
-            <TableCell>{row.country}</TableCell>
-            <TableCell>{row.port}</TableCell>
-            <TableCell className="text-center">
-              <Checkbox checked={row.active} disabled />
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Country</TableHead>
+              <TableHead>Port</TableHead>
+              <TableHead className="text-center">Active</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {mappings.map((row) => (
+              <TableRow key={row.id} className="hover:bg-gray-50">
+                <TableCell>{row.country}</TableCell>
+                <TableCell>{row.port}</TableCell>
+                <TableCell className="text-center">
+                  <Checkbox checked={row.active} disabled />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </div>
     </div>
+ </>
   );
 }

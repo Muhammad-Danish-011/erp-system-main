@@ -48,6 +48,9 @@ export default function FreightChargeMaster() {
   };
 
   return (
+
+   <>
+      <h1 className="text-3xl font-bold text-center mb-8 text-white">Freight Charges</h1>
     <div className="p-6 bg-white rounded-lg shadow-lg max-w-6xl mx-auto">
       {/* Buttons */}
       <div className="flex gap-2 mb-4">
@@ -118,7 +121,7 @@ export default function FreightChargeMaster() {
           />
         </div>
 
-        <div className="flex items-center gap-2 mt-6">
+        <div className="bg-[#1f2937] text-white rounded flex items-center gap-2 p-2 mt-1 sm:mt-5">
           <input type="checkbox" checked={isActive} onChange={(e) => setIsActive(e.target.checked)} />
           Is Active
         </div>
@@ -159,5 +162,6 @@ export default function FreightChargeMaster() {
     </Table>
       </div>
     </div>
+   </>
   );
 }

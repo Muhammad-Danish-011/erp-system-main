@@ -83,7 +83,7 @@ function InspectionCostMapping() {
     );
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-6 ">
       <h1 className="text-3xl font-bold text-center mb-8 text-white">Inspection Cost Mapping</h1>
 
       <div className="flex items-center gap-2 bg-gray-100 p-4 rounded-lg">
@@ -99,7 +99,7 @@ function InspectionCostMapping() {
           <select 
             value={sourceCountry} 
             onChange={(e) => setSourceCountry(e.target.value)}
-            className="w-56 border border-gray-300 rounded-md p-2 w-full"
+            className="border border-gray-300 rounded-md p-2 w-full"
           >
             <option value="">All Countries</option>
             {uniqueSourceCountries.map(country => (
@@ -113,7 +113,7 @@ function InspectionCostMapping() {
           <select
             value={destinationCountry}
             onChange={(e) => setDestinationCountry(e.target.value)}
-            className="w-56 border border-gray-300 rounded-md p-2 w-full"
+            className="border border-gray-300 rounded-md p-2 w-full"
           >
             <option value="">All Countries</option>
             {uniqueDestinationCountries.map(country => (

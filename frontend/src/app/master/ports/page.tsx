@@ -7,8 +7,9 @@ import {
   TableHead,
   TableBody,
   TableCell,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
 
 export default function PortMaster() {
   const [portName, setPortName] = useState("");
@@ -33,6 +34,8 @@ export default function PortMaster() {
   };
 
   return (
+  <>
+         <h1 className="text-3xl font-bold text-center mb-8 text-white">Ports</h1>
     <div className="p-6 bg-white rounded-lg shadow-lg max-w-4xl mx-auto">
       {/* Buttons */}
       <div className="flex gap-2 mb-4">
@@ -61,58 +64,63 @@ export default function PortMaster() {
       </div>
 
       {/* Form */}
-      <div className="flex items-center gap-4 mb-4">
-        <label className="text-sm font-medium">Port Name:</label>
-        <input
-          type="text"
-          value={portName}
-          onChange={(e) => setPortName(e.target.value)}
-          className="border border-gray-300 rounded px-3 py-2 w-64"
-          placeholder="Enter port name..."
-        />
-        <label className="text-sm font-medium">Insurance:</label>
-        <input
-          type="number"
-          value={insurance}
-          onChange={(e) => setInsurance(Number(e.target.value))}
-          className="border border-gray-300 rounded px-3 py-2 w-24"
-        />
-        <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={isActive}
-            onChange={(e) => setIsActive(e.target.checked)}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+        <div className="flex-1 ">
+          <label className="block text-sm font-medium mb-1 ">Port Name:</label>
+          <Input
+            value={portName}
+            onChange={(e) => setPortName(e.target.value)}
+            placeholder="Enter port name..."
           />
-          Is Active
-        </label>
+        </div>
+        <div className="flex-1">
+          <label className="block text-sm font-medium mb-1">Insurance:</label>
+          <Input
+            type="number"
+            value={insurance}
+            onChange={(e) => setInsurance(Number(e.target.value))}
+            // className="border border-gray-300 rounded px-3 py-2 w-24"
+          />
+        </div>
+
+        <div className="bg-[#1f2937] text-white px-2 py-2 mt-0 md:mt-5 rounded border border-gray-600">
+          <label className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={isActive}
+              onChange={(e) => setIsActive(e.target.checked)}
+            />
+            Is Active
+          </label>
+        </div>
       </div>
 
       {/* Table */}
       <div className="overflow-x-auto border border-gray-300 rounded">
-      
-         <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Port ID</TableHead>
-          <TableHead>Port Name</TableHead>
-          <TableHead>Insurance Cost</TableHead>
-          <TableHead className="text-center">Active</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {ports.map((port) => (
-          <TableRow key={port.id}>
-            <TableCell>{port.id}</TableCell>
-            <TableCell>{port.name}</TableCell>
-            <TableCell>{port.insurance}</TableCell>
-            <TableCell className="text-center">
-              <Checkbox checked={port.active} disabled />
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Port ID</TableHead>
+              <TableHead>Port Name</TableHead>
+              <TableHead>Insurance Cost</TableHead>
+              <TableHead className="text-center">Active</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {ports.map((port) => (
+              <TableRow key={port.id}>
+                <TableCell>{port.id}</TableCell>
+                <TableCell>{port.name}</TableCell>
+                <TableCell>{port.insurance}</TableCell>
+                <TableCell className="text-center">
+                  <Checkbox checked={port.active} disabled />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </div>
     </div>
+  </>
   );
 }

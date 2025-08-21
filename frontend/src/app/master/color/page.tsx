@@ -1,4 +1,5 @@
 "use client";
+import { Input } from "@/components/ui/input";
 import { useState } from "react";
 
 export default function CarColorMaster() {
@@ -44,9 +45,14 @@ export default function CarColorMaster() {
   };
 
   return (
+<>
+
+             <h1 className="text-3xl font-bold text-center mb-8 text-white">Colors</h1>
     <div className="p-6 bg-white rounded-lg shadow-lg max-w-4xl mx-auto">
+     
       {/* Top Buttons */}
       <div className="flex gap-2 mb-4">
+ 
         <button
           onClick={handleSave}
           className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
@@ -68,30 +74,38 @@ export default function CarColorMaster() {
       </div>
 
       {/* Input Section */}
-      <div className="flex items-center gap-4 mb-4">
-        <label className="text-sm font-medium">Color Name :</label>
-        <input
+      <div className="flex items-center gap-1 sm:gap-4 mb-4">
+      <div className="flex-1">
+
+          <label className="text-sm font-medium">Color Name :</label>
+        <Input
           type="text"
           value={colorName}
           onChange={(e) => setColorName(e.target.value)}
-          className="border border-gray-300 rounded px-3 py-2 w-64"
+          // className="border border-gray-300 rounded px-3 py-2 w-64"
           placeholder="Enter color name..."
         />
-        <input
+      </div>
+       <div className="flex-1 w-25">
+ <label className="text-sm font-medium">Generate Code :</label>
+        <Input
           type="color"
           value={hexCode}
           onChange={(e) => setHexCode(e.target.value)}
-          className="h-10 w-16 border rounded"
+          className="h-10 border rounded py-1 px-1"
         />
-        <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={isActive}
-            onChange={(e) => setIsActive(e.target.checked)}
-            className="h-4 w-4"
-          />
-          Is Active
-        </label>
+       </div>
+     
+        <div className="flex-1 bg-[#1f2937] text-white px-2 py-2 rounded border border-gray-600 self-end">
+          <label className="flex items-center gap-2 text-sm">
+            <input
+              type="checkbox"
+              checked={isActive}
+              onChange={(e) => setIsActive(e.target.checked)}
+            />
+            Is Active
+          </label>
+        </div>
       </div>
 
       {/* Table */}
@@ -133,5 +147,6 @@ export default function CarColorMaster() {
         </table>
       </div>
     </div>
+</>
   );
 }

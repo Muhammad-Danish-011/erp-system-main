@@ -50,6 +50,7 @@ const data: RowData[] = [
 export default function salesOrderApproval() {
   return (
     <div className="p-6 space-y-6">
+       <h1 className="text-3xl font-bold text-center mb-8 text-white">Sales Order Approval</h1>
       {/* Top Buttons */}
       <div className="flex gap-3">
         <Button className="bg-blue-600 hover:bg-blue-700 text-white">Save</Button>

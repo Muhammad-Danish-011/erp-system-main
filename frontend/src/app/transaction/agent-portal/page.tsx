@@ -41,6 +41,8 @@ export default function AgentModule() {
     ];
 
     return (
+        <>
+       <h1 className="text-3xl font-bold text-center mb-8 text-white">Agent Portal</h1>
         <div className="p-4 bg-white shadow-lg rounded-lg max-w-full mx-auto">
             {/* Top Section */}
             <div className="grid grid-cols-12 gap-4 mb-4">
@@ -214,5 +216,6 @@ export default function AgentModule() {
                 </div>
             )}
         </div>
+         </>
     );
 }

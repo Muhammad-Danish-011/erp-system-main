@@ -97,7 +97,7 @@ function optionsMaster() {
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6 text-white">Additional Options Master</h1>
+      <h1 className="text-2xl font-bold mb-6 text-white text-center">Additional Options Master</h1>
 
       {/* Action Buttons */}
       <div className="flex flex-wrap gap-2 mb-6">
@@ -143,7 +143,7 @@ function optionsMaster() {
           />
         </div>
 
-        <div className="flex items-center gap-2 bg-[#1f2937] px-2 py-2 rounded h-min self-end">
+        <div className="flex items-center gap-2 bg-[#1f2937] px-2 py-2 rounded h-min self-end border border-gray-600 text-white">
           <Checkbox
             id="isActive"
             checked={isActive}

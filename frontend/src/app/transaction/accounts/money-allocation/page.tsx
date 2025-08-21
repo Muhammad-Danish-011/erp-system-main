@@ -118,6 +118,8 @@ export default function MoneyAllocationPage() {
 
   return (
     <div className="p-4 space-y-4">
+
+    <h1 className="text-3xl font-bold text-center mb-8 text-white">Money Allocation</h1>
       {/* Top Buttons */}
       <div className="flex gap-2">
         <Button className="bg-blue-600 text-white">Save</Button>
