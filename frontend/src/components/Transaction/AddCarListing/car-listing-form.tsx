@@ -61,136 +61,124 @@ export default function CarListingForm() {
       </div>
 
       {/* second Row */}
-      <div className="flex flex-wrap gap-4">
-        {/* Make Type */}
-        <div className="flex flex-col w-[23%] ">
-          <label className="block text-sm font-medium mb-1">
-            Make:
-          </label>
-          <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
-            <option value="">Not Selected</option>
-            <option value="1">Type 1</option>
-            <option value="2">Type 2</option>
-            <option value="3">Type 3</option>
-          </select>
-        </div>
+      <div className="grid  grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 pt-2">
+  {/* Make Type */}
+  <div className="flex flex-col">
+    <label className="block text-sm font-medium mb-1">Make:</label>
+    <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
+      <option value="">Not Selected</option>
+      <option value="1">Type 1</option>
+      <option value="2">Type 2</option>
+      <option value="3">Type 3</option>
+    </select>
+  </div>
 
-        {/* Model */}
-        <div className="flex flex-col w-[23%]">
-          <label className="block text-sm font-medium mb-1">Model:</label>
-          <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
-            <option value="">Not Selected</option>
-            <option value="1">Model 1</option>
-            <option value="2">Model 2</option>
-            <option value="3">Model 3</option>
-          </select>
-        </div>
+  {/* Model */}
+  <div className="flex flex-col">
+    <label className="block text-sm font-medium mb-1">Model:</label>
+    <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
+      <option value="">Not Selected</option>
+      <option value="1">Model 1</option>
+      <option value="2">Model 2</option>
+      <option value="3">Model 3</option>
+    </select>
+  </div>
 
-        {/* Condition */}
-        <div className="flex flex-col w-[23%]">
-          <label className="block text-sm font-medium mb-1">Condition:</label>
-          <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
-            <option value="">Not Selected</option>
-            <option value="1">New</option>
-            <option value="2">Used</option>
-          </select>
-        </div>
+  {/* Condition */}
+  <div className="flex flex-col">
+    <label className="block text-sm font-medium mb-1">Condition:</label>
+    <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
+      <option value="">Not Selected</option>
+      <option value="1">New</option>
+      <option value="2">Used</option>
+    </select>
+  </div>
 
-        {/* Inventory Location */}
-        <div className="flex flex-col w-[23%]">
-          <label className="block text-sm font-medium mb-1">
-            Inventory Location:
-          </label>
-          <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
-            <option value="">Not Selected</option>
-            <option value="1">Location 1</option>
-            <option value="2">Location 2</option>
-          </select>
-        </div>
+  {/* Inventory Location */}
+  <div className="flex flex-col">
+    <label className="block text-sm font-medium mb-1">Inventory Location:</label>
+    <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
+      <option value="">Not Selected</option>
+      <option value="1">Location 1</option>
+      <option value="2">Location 2</option>
+    </select>
+  </div>
 
-        {/* second sub row  */}
-        {/* Transmission */}
-        <div className="flex flex-col w-[23%]">
-          <label className="block text-sm font-medium mb-1">
-            Transmission:
-          </label>
-          <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
-            <option value="">Not Selected</option>
-            <option value="1">Type 1</option>
-            <option value="2">Type 2</option>
-            <option value="3">Type 3</option>
-          </select>
-        </div>
+  {/* Transmission */}
+  <div className="flex flex-col">
+    <label className="block text-sm font-medium mb-1">Transmission:</label>
+    <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
+      <option value="">Not Selected</option>
+      <option value="1">Type 1</option>
+      <option value="2">Type 2</option>
+      <option value="3">Type 3</option>
+    </select>
+  </div>
 
-        {/* FuelTYpe */}
-        <div className="flex flex-col w-[23%]">
-          <label className="block text-sm font-medium mb-1">FuelType:</label>
-          <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
-            <option value="">Not Selected</option>
-            <option value="1">Model 1</option>
-            <option value="2">Model 2</option>
-            <option value="3">Model 3</option>
-          </select>
-        </div>
+  {/* Fuel Type */}
+  <div className="flex flex-col">
+    <label className="block text-sm font-medium mb-1">Fuel Type:</label>
+    <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
+      <option value="">Not Selected</option>
+      <option value="1">Model 1</option>
+      <option value="2">Model 2</option>
+      <option value="3">Model 3</option>
+    </select>
+  </div>
 
-        {/* Drive train */}
-        <div className="flex flex-col w-[23%]">
-          <label className="block text-sm font-medium mb-1">Drivetrain:</label>
-          <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
-            <option value="">Not Selected</option>
-            <option value="1">New</option>
-            <option value="2">Used</option>
-          </select>
-        </div>
+  {/* Drive train */}
+  <div className="flex flex-col">
+    <label className="block text-sm font-medium mb-1">Drivetrain:</label>
+    <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
+      <option value="">Not Selected</option>
+      <option value="1">New</option>
+      <option value="2">Used</option>
+    </select>
+  </div>
 
-        {/* Hot Location */}
-        <div className="flex flex-col w-[23%]">
-          <label className="block text-sm font-medium mb-1">
-            Hot Location:
-          </label>
-          <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
-            <option value="">Not Selected</option>
-            <option value="1">Location 1</option>
-            <option value="2">Location 2</option>
-          </select>
-        </div>
+  {/* Hot Location */}
+  <div className="flex flex-col">
+    <label className="block text-sm font-medium mb-1">Hot Location:</label>
+    <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
+      <option value="">Not Selected</option>
+      <option value="1">Location 1</option>
+      <option value="2">Location 2</option>
+    </select>
+  </div>
 
-        {/* Third sub Row */}
+  {/* Steering Type */}
+  <div className="flex flex-col">
+    <label className="block text-sm font-medium mb-1">Steering Type:</label>
+    <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
+      <option value="">Not Selected</option>
+      <option value="1">Type 1</option>
+      <option value="2">Type 2</option>
+      <option value="3">Type 3</option>
+    </select>
+  </div>
 
-        {/* Steering Type */}
-        <div className="flex flex-col w-[23%]">
-          <label className="block text-sm font-medium mb-1">
-            Steering Type:
-          </label>
-          <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
-            <option value="">Not Selected</option>
-            <option value="1">Type 1</option>
-            <option value="2">Type 2</option>
-            <option value="3">Type 3</option>
-          </select>
-        </div>
+  {/* Color */}
+  <div className="flex flex-col">
+    <label className="block text-sm font-medium mb-1">Select Color:</label>
+    <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
+      <option value="">Not Selected</option>
+      <option value="1">Model 1</option>
+      <option value="2">Model 2</option>
+      <option value="3">Model 3</option>
+    </select>
+  </div>
 
-        {/* color */}
-        <div className="flex flex-col w-[23%]">
-          <label className="block text-sm font-medium mb-1">Select Color:</label>
-          <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
-            <option value="">Not Selected</option>
-            <option value="1">Model 1</option>
-            <option value="2">Model 2</option>
-            <option value="3">Model 3</option>
-          </select>
-        </div>
+  {/* Body Type */}
+  <div className="flex flex-col">
+    <label className="block text-sm font-medium mb-1">Body Type:</label>
+    <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
+      <option value="">Not Selected</option>
+      <option value="1">New</option>
+      <option value="2">Used</option>
+    </select>
+  </div>
+</div>
 
-        {/* BodyType */}
-        <div className="flex flex-col w-[23%]">
-          <label className="block text-sm font-medium mb-1">Body Type:</label>
-          <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
-            <option value="">Not Selected</option>
-            <option value="1">New</option>
-            <option value="2">Used</option>
-          </select>
-        </div>
-      </div>
 
       {/* third Row */}
 
@@ -322,11 +310,11 @@ export default function CarListingForm() {
         <div className="w-[50vw] py-5">
           <label className="block text-sm font-medium mb-1">Car Options:</label>
 
-          <div className="flex flex-wrap gap-2 justify-center">
+          <div className="flex flex-wrap gap-2 overflow-y-auto max-h-40 ">
             {carOptions.map((option) => (
               <div
                 key={option.id}
-                className="flex items-center gap-2 bg-gray-800 px-2 py-2 rounded h-min w-[9vw]"
+                className="flex items-center gap-2 bg-gray-800 px-2 py-2 rounded h-50 w-fit "
               >
                 <Checkbox
                   id={option.id}
@@ -344,8 +332,8 @@ export default function CarListingForm() {
           </div>
 
           {/* Admin Note */}
-          <div className="flex gap-2 py-5">
-            <div className="flex-1">
+          <div className="flex gap-2 py-5 flex-col md:flex-row">
+            <div className="w-full">
               <label className="block text-sm font-medium mb-1">
                 Admin Note:
               </label>
@@ -357,7 +345,7 @@ export default function CarListingForm() {
             </div>
 
             {/* Description */}
-            <div className="flex-1">
+            <div className="w-full">
               <label className="block text-sm font-medium mb-1">
                 Description:
               </label>

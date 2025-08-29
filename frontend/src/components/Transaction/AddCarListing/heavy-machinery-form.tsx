@@ -61,9 +61,9 @@ export default function HeavyMachineryListingForm() {
       </div>
 
       {/* second Row */}
-      <div className="flex flex-wrap gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 pt-2">
         {/* Make Type */}
-        <div className="flex flex-col w-[23%]">
+        <div className="flex flex-col">
           <label className="block text-sm font-medium mb-1">
             Make:
           </label>
@@ -76,7 +76,7 @@ export default function HeavyMachineryListingForm() {
         </div>
 
         {/* Model */}
-        <div className="flex flex-col w-[23%]">
+        <div className="flex flex-col">
           <label className="block text-sm font-medium mb-1">Model:</label>
           <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
             <option value="">Not Selected</option>
@@ -87,7 +87,7 @@ export default function HeavyMachineryListingForm() {
         </div>
 
         {/* Condition */}
-        <div className="flex flex-col w-[23%]">
+        <div className="flex flex-col">
           <label className="block text-sm font-medium mb-1">Condition:</label>
           <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
             <option value="">Not Selected</option>
@@ -97,7 +97,7 @@ export default function HeavyMachineryListingForm() {
         </div>
 
         {/* Inventory Location */}
-        <div className="flex flex-col w-[23%]">
+        <div className="flex flex-col">
           <label className="block text-sm font-medium mb-1">
             Inventory Location:
           </label>
@@ -110,7 +110,7 @@ export default function HeavyMachineryListingForm() {
 
         {/* second sub row  */}
         {/* Transmission */}
-        <div className="flex flex-col w-[23%]">
+        <div className="flex flex-col">
           <label className="block text-sm font-medium mb-1">
             Transmission:
           </label>
@@ -123,7 +123,7 @@ export default function HeavyMachineryListingForm() {
         </div>
 
         {/* FuelTYpe */}
-        <div className="flex flex-col w-[23%]">
+        <div className="flex flex-col">
           <label className="block text-sm font-medium mb-1">FuelType:</label>
           <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
             <option value="">Not Selected</option>
@@ -134,7 +134,7 @@ export default function HeavyMachineryListingForm() {
         </div>
 
         {/* axle  */}
-        <div className="flex flex-col w-[23%]">
+        <div className="flex flex-col">
           <label className="block text-sm font-medium mb-1">Axle Config:</label>
           <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
             <option value="">Not Selected</option>
@@ -144,7 +144,7 @@ export default function HeavyMachineryListingForm() {
         </div>
 
         {/* Hot Location */}
-        <div className="flex flex-col w-[23%]">
+        <div className="flex flex-col">
           <label className="block text-sm font-medium mb-1">
             Hot Location:
           </label>
@@ -158,7 +158,7 @@ export default function HeavyMachineryListingForm() {
         {/* Third sub Row */}
 
         {/* Steering Type */}
-        <div className="flex flex-col w-[23%]">
+        <div className="flex flex-col">
           <label className="block text-sm font-medium mb-1">
             Steering Type:
           </label>
@@ -171,7 +171,7 @@ export default function HeavyMachineryListingForm() {
         </div>
 
         {/* color */}
-        <div className="flex flex-col w-[23%]">
+        <div className="flex flex-col">
           <label className="block text-sm font-medium mb-1">Select Color:</label>
           <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
             <option value="">Not Selected</option>
@@ -182,7 +182,7 @@ export default function HeavyMachineryListingForm() {
         </div>
 
         {/* category  */}
-        <div className="flex flex-col w-[23%]">
+        <div className="flex flex-col">
           <label className="block text-sm font-medium mb-1">Category:</label>
           <select className="bg-gray-800 text-white border-gray-600 rounded-md p-2">
             <option value="">Not Selected</option>
@@ -230,11 +230,11 @@ export default function HeavyMachineryListingForm() {
         <div className="w-[50vw] py-5">
           <label className="block text-sm font-medium mb-1">Car Options:</label>
 
-          <div className="flex flex-wrap gap-2 justify-center">
+          <div className="flex flex-wrap gap-2 overflow-y-auto max-h-40">
             {carOptions.map((option) => (
               <div
                 key={option.id}
-                className="flex items-center gap-2 bg-gray-800 px-2 py-2 rounded h-min w-[9vw]"
+                className="flex items-center gap-2 bg-gray-800 px-2 py-2 rounded h-50 w-fit"
               >
                 <Checkbox
                   id={option.id}
@@ -252,8 +252,8 @@ export default function HeavyMachineryListingForm() {
           </div>
 
           {/* Admin Note */}
-          <div className="flex gap-2 py-5">
-            <div className="flex-1">
+          <div className="flex gap-2 py-5 flex-col md:flex-row">
+            <div className="w-full">
               <label className="block text-sm font-medium mb-1">
                 Admin Note:
               </label>
@@ -265,7 +265,7 @@ export default function HeavyMachineryListingForm() {
             </div>
 
             {/* Description */}
-            <div className="flex-1">
+            <div className="w-full">
               <label className="block text-sm font-medium mb-1">
                 Description:
               </label>
