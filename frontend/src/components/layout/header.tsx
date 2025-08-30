@@ -19,7 +19,7 @@ export function Header() {
     <header className="flex h-16 items-center justify-between border-b border-gray-200 bg-white px-4 sm:px-6 lg:px-8">
       <div className="flex items-center gap-4">
        
-        <h2 className="text-2xl font-semibold text-gray-900">{getPageTitle()}</h2>
+        <h2 className="text-2xl font-semibold text-gray-900 ml-[50px] lg:ml-0">{getPageTitle()}</h2>
       </div>
       <div className="flex items-center gap-4">
         <button

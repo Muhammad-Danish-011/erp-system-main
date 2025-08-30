@@ -30,7 +30,7 @@ const alerts = [
 
 export default function DashboardPage() {
   return (
- <div className="min-h-screen overflow-y-auto">
+ <div className=" overflow-y-auto">
   <div className="space-y-6 p-6">
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
       <AnalogClock timezone="Asia/Tokyo" label="Japan Time" />
