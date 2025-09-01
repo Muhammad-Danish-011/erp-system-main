@@ -417,7 +417,7 @@ const settingsNav = { name: "Settings", href: "/settings", icon: SettingsIcon };
       {/* Sidebar */}
       <div
         className={cn(
-          "fixed lg:static top-0 left-0 z-50 flex flex-col bg-gray-900 transition-all duration-300 h-screen overflow-hidden",
+          "fixed lg:static top-0 left-0 z-50 flex flex-col bg-gray-900 transition-all duration-300 h-[100vh] overflow-hidden",
           isCollapsed ? "w-16" : "w-64",
           // mobile behavior
           isMobileOpen ? "translate-x-0" : "-translate-x-full",
