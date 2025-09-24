@@ -53,8 +53,8 @@ export default function TeligraphTransferModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white w-[900px] rounded shadow-lg p-6">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 ">
+      <div className="bg-white rounded shadow-lg p-6 m-2">
         {/* Title */}
         <h2 className="text-xl font-semibold mb-2 text-center">
           Selected Payment
@@ -91,7 +91,7 @@ export default function TeligraphTransferModal({
           <div className="flex flex-col">
             {/* <label className="text-sm font-medium">Select Option</label> */}
             <div>
-              <span>Select customer Payment is received from :</span>
+              <span className="">Select customer Payment is received from :</span>
               <select
                 value={" "}
                 // onChange={(e) => setVehicleType(e.target.value)}
@@ -105,7 +105,7 @@ export default function TeligraphTransferModal({
             </div>
           </div>
 
-          <div className="">
+          <div className="flex">
             <Button
               variant="outline"
               onClick={onClose}

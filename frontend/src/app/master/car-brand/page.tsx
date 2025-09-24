@@ -13,6 +13,7 @@ import {
   Table,
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Search } from "lucide-react";
 
 interface CarBrand {
   id: number;
@@ -97,9 +98,14 @@ export default function CarBrandPage() {
   return (
     <div className="space-y-6">
       {/* Actions */}
-      <h1 className="text-3xl font-bold text-center mb-8 text-white">Car Brands</h1>
+      <h1 className="text-3xl font-bold text-center mb-8 text-white">
+        Car Brands
+      </h1>
       <div className="flex items-center gap-2 bg-white p-4 rounded-lg shadow">
-        <Button onClick={handleSave} className="bg-blue-500 hover:bg-blue-600 text-white">
+        <Button
+          onClick={handleSave}
+          className="bg-blue-500 hover:bg-blue-600 text-white"
+        >
           {selectedBrand ? "Update" : "Save"}
         </Button>
         <Button
@@ -109,7 +115,11 @@ export default function CarBrandPage() {
         >
           Delete
         </Button>
-        <Button variant="outline" onClick={handleClear} className="border-gray-300 hover:bg-gray-100 text-gray-700">
+        <Button
+          variant="outline"
+          onClick={handleClear}
+          className="border-gray-300 hover:bg-gray-100 text-gray-700"
+        >
           Clear
         </Button>
       </div>
@@ -118,8 +128,8 @@ export default function CarBrandPage() {
       <div className="flex flex-wrap items-center gap-4 bg-white p-4 rounded-lg shadow">
         <div className="flex flex-col">
           <label className="text-sm font-medium">Select Option</label>
-          <select 
-            value={vehicleType} 
+          <select
+            value={vehicleType}
             onChange={(e) => setVehicleType(e.target.value)}
             className="w-56 border border-gray-300 rounded-md p-2"
           >
@@ -154,52 +164,51 @@ export default function CarBrandPage() {
 
       {/* Table */}
       <div className="bg-white p-4 rounded-lg shadow">
-        <Input
-          placeholder="Enter text to search"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="mb-4 w-64"
-        />
-<div className="overflow-x-auto">
-
-
-
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>ID</TableHead>
-              <TableHead>Brand Name</TableHead>
-              <TableHead>Slug</TableHead>
-              <TableHead>Active</TableHead>
-              <TableHead>Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {filteredBrands.map((brand) => (
-              <TableRow key={brand.id}>
-                <TableCell>{brand.id}</TableCell>
-                <TableCell>{brand.brandName}</TableCell>
-                <TableCell>{brand.slug}</TableCell>
-                <TableCell>
-                  <Checkbox
-                    checked={brand.active}
-                    onCheckedChange={(checked) =>
-                      toggleBrandActive(brand.id, checked as boolean)
-                    }
+      
+        <div className="relative mb-4 w-64">
+                  <Search className="absolute left-2 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                  <Input
+                    placeholder="Enter text to search"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="pl-9"
                   />
-                </TableCell>
-                <TableCell>
-                  <Button
-                    variant="ghost"
-                    onClick={() => handleUpdate(brand)}
-                  >
-                    Edit
-                  </Button>
-                </TableCell>
+                </div>
+
+        <div className="overflow-x-auto">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>ID</TableHead>
+                <TableHead>Brand Name</TableHead>
+                <TableHead>Slug</TableHead>
+                <TableHead>Active</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {filteredBrands.map((brand) => (
+                <TableRow key={brand.id}>
+                  <TableCell>{brand.id}</TableCell>
+                  <TableCell>{brand.brandName}</TableCell>
+                  <TableCell>{brand.slug}</TableCell>
+                  <TableCell>
+                    <Checkbox
+                      checked={brand.active}
+                      onCheckedChange={(checked) =>
+                        toggleBrandActive(brand.id, checked as boolean)
+                      }
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <Button variant="ghost" onClick={() => handleUpdate(brand)}>
+                      Edit
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </div>
       </div>
     </div>

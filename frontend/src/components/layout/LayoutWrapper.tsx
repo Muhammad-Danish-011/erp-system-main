@@ -10,7 +10,8 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
     pathname === "/sign-in" || pathname === "/sign-up-hidden-onlyForOffice";
 
   return (
-    <div className="flex h-full">
+
+    <div className="flex h-screen">
       {/* Sidebar */}
       {!isAuthPage && <Sidebar />}
 

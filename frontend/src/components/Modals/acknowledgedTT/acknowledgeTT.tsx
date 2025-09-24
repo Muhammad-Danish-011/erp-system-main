@@ -3,8 +3,19 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 type Props = {
   open: boolean;
@@ -14,7 +25,7 @@ type Props = {
 export default function ApproveRejectVoucherModal({ open, onClose }: Props) {
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-3xl">
+      <DialogContent className="max-w-2xl">
         <DialogHeader>
           <div className="flex justify-between items-center">
             <DialogTitle className="text-2xl font-bold text-cyan-600">
@@ -29,7 +40,7 @@ export default function ApproveRejectVoucherModal({ open, onClose }: Props) {
         <div className="border-t my-2" />
 
         {/* Form */}
-        <div className="grid grid-cols-2 gap-6 py-4">
+        <div className="grid grid-cols-2 gap-6 py-4 ">
           {/* Left Side */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
