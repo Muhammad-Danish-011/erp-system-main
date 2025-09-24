@@ -82,7 +82,7 @@ const SignUp = () => {
       }}
     >
 
-      <div className="absolute top-4 left-4 z-10 animate-pulse">
+      <div className="absolute top-4 left-4 z-10 animate-pulse hidden lg:block">
         <Logo />
       </div>
       <Card className="md:h-auto w-[80%] sm:w-[600px] p-4 sm:p-8 bg-white/90 shadow-2xl rounded-2xl">
