@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { toast } from "sonner";
 import { TriangleAlert } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -18,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import Logo from "@/components/ui/logo";
 import { validateSignupForm } from "./signupValidation";
 import axios from "axios";
+import { toast } from "@/components/ui/CustomToast";
 
 interface SignUpForm {
   fullName: string;
@@ -95,7 +95,7 @@ const handleSubmit = async (e: React.FormEvent) => {
     IsSeniorManager: form.isSeniorManager ?? false,
     IsLocalManager: form.isLocalManager ?? false,
     DefaultApplicationID: 1,
-    IsManagedBy: 1 // always 1
+    IsManagedBy: 1,
   };
 
   console.log("Signup Payload:", body);
@@ -104,9 +104,7 @@ const handleSubmit = async (e: React.FormEvent) => {
     const res = await axios.post(
       "https://localhost:7215/api/Auth/signup",
       body,
-      {
-        headers: { "Content-Type": "application/json" },
-      }
+      { headers: { "Content-Type": "application/json" } }
     );
 
     console.log(res.data, "✅ Signup response");
@@ -118,39 +116,30 @@ const handleSubmit = async (e: React.FormEvent) => {
     let message = "An unexpected error occurred.";
 
     if (axios.isAxiosError(err)) {
-      // Try to parse backend error first
-      message =
-        err.response?.data?.error ||
-        err.response?.data?.message ||
-        JSON.stringify(err.response?.data);
+      // ✅ Use backend message if available
+      message = err.response?.data?.error || err.response?.data?.message || message;
 
-      switch (err.response?.status) {
-        case 400:
-          message = "❌ Bad request. Check your input.";
-          break;
-        case 401:
-          message = "❌ Unauthorized. You are not allowed to perform this action.";
-          break;
-        case 403:
-          message = "❌ Forbidden. Contact support.";
-          break;
-        case 409:
-          message = "❌ Duplicate entry. User already exists.";
-          break;
-        case 500:
-          message = "❌ Server error. Try again later.";
-          break;
+      // Optional: fallback for other status codes
+      if (!message) {
+        switch (err.response?.status) {
+          case 400: message = "❌ Bad request. Check your input."; break;
+          case 401: message = "❌ Unauthorized. You are not allowed."; break;
+          case 403: message = "❌ Forbidden. Contact support."; break;
+          case 409: message = "❌ Duplicate entry. User already exists."; break;
+          case 500: message = "❌ Server error. Try again later."; break;
+        }
       }
     } else if (err instanceof Error) {
       message = err.message;
     }
 
     setError(message);
-    toast.error(message);
+    toast.error(message); // ✅ Show proper toast
   } finally {
     setPending(false);
   }
 };
+
 
 
 
