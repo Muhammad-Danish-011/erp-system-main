@@ -25,6 +25,8 @@ export const toast = {
     sonnerToast.success(message, { style: { background: "green", color: "white" } }),
   error: (message: string) => 
     sonnerToast.error(message, { style: { background: "red", color: "white" } }),
+  info: (message: string) =>
+    sonnerToast.info(message, { style: { background: "#3498db", color: "white" } })
 };
 
 export default CustomToast;

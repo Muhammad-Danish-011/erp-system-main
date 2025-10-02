@@ -1,7 +1,6 @@
-
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -13,222 +12,248 @@ import {
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import api from "@/lib/api";
+import { toast } from "@/components/ui/CustomToast";
 
-function optionsMaster() {
-  const [vehicleType, setVehicleType] = useState("Cars");
-  const [carMake, setCarMake] = useState("Toyota");
-  const [modelName, setModelName] = useState("");
+interface Option {
+  optionId: number;
+  optionName: string;
+  isActive: boolean;
+  createdOn: string;
+  createdBy: number;
+  insertedTerminal: string;
+  insertedTerminalIP: string;
+  updatedBy?: number;
+  updatedTerminal?: string;
+  updatedTerminalIP?: string;
+  updatedOn?: string;
+}
+
+const OptionsMaster: React.FC = () => {
+  const [options, setOptions] = useState<Option[]>([]);
+  const [carOptionName, setCarOptionName] = useState("");
   const [isActive, setIsActive] = useState(true);
   const [editingId, setEditingId] = useState<number | null>(null);
-  const [editModelName, setEditModelName] = useState("");
-  const [carOptionsKey, setCarOptionsKey] = useState<string>("");
+  const [editOptionName, setEditOptionName] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const [options, setOptions] = useState([
-    { id: 1, name: "Navigation System", active: true },
-    { id: 2, name: "Spare Tyre", active: true },
-    { id: 3, name: "Sun Roof", active: true },
-    { id: 4, name: "Centralized Door Locks", active: true },
-    { id: 5, name: "Front Camera", active: true },
-    { id: 6, name: "Side Camera", active: true },
-    { id: 7, name: "Back Camera", active: true },
-    { id: 8, name: "Leather Seats", active: true },
-    { id: 9, name: "HID", active: true },
-    { id: 10, name: "Alloy Wheels", active: true },
-    { id: 11, name: "Power Steering", active: true },
-    { id: 12, name: "Air Bags", active: true },
-    { id: 13, name: "Power Windows", active: true },
-    { id: 14, name: "Keyless Entry", active: true },
-    { id: 15, name: "Fog Lights", active: true },
-    { id: 16, name: "Cruise Control", active: true },
-    { id: 17, name: "Turbo", active: true },
-  ]);
-
-  const carMakes = ["Toyota", "Honda", "Nissan", "Mitsubishi", "Suzuki"];
-  const vehicleTypes = ["Cars", "Trucks", "SUVs", "Vans", "Buses"];
-
-  const handleSave = () => {
-    if (modelName.trim()) {
-      const newId =
-        options.length > 0 ? Math.max(...options.map((m) => m.id)) + 1 : 1;
-      setOptions([
-        ...options,
-        { id: newId, name: modelName, active: isActive },
-      ]);
-      setModelName("");
+  // 🔹 Load options from backend
+  const fetchOptions = async () => {
+    try {
+      setLoading(true);
+      const res = await api.get<Option[]>("/CarOptions");
+      setOptions(res.data);
+    } catch (error: any) {
+      toast.error(error.response?.data || "Failed to fetch options");
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleUpdate = () => {
-    if (editingId !== null && editModelName.trim()) {
-      setOptions(
-        options.map((model) =>
-          model.id === editingId ? { ...model, name: editModelName } : model
+  useEffect(() => {
+    fetchOptions();
+  }, []);
+
+  // 🔹 Save new option
+  const handleSave = async () => {
+    if (!carOptionName.trim()) return toast.error("Option name is required");
+    try {
+      setLoading(true);
+      const payload = { optionName: carOptionName, isActive };
+      const res = await api.post<Option>("/CarOptions", payload);
+      setOptions((prev) => [...prev, res.data]);
+      setCarOptionName("");
+      setIsActive(true);
+      toast.success("Option added successfully!");
+    } catch (error: any) {
+      toast.error(error.response?.data || "Failed to add option");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 🔹 Start editing
+  const startEditing = (option: Option) => {
+    setEditingId(option.optionId);
+    setEditOptionName(option.optionName);
+    setIsActive(option.isActive);
+  };
+
+  // 🔹 Update option
+  const handleUpdate = async () => {
+    if (editingId === null || !editOptionName.trim()) return toast.error("Option name is required");
+    try {
+      setLoading(true);
+      const payload = { optionName: editOptionName, isActive };
+      await api.patch(`/CarOptions/${editingId}`, payload);
+      setOptions((prev) =>
+        prev.map((opt) =>
+          opt.optionId === editingId
+            ? { ...opt, optionName: editOptionName, isActive }
+            : opt
         )
       );
-      setEditingId(null);
-      setEditModelName("");
+      toast.success("Option updated successfully!");
+      cancelEditing();
+    } catch (error: any) {
+      toast.error(error.response?.data || "Failed to update option");
+    } finally {
+      setLoading(false);
     }
   };
 
-  // const handleDelete = (id: number) => {
-  //   setOptions(options.filter((model) => model.id !== id));
-  // };
-
-  const handleDelete = () => {
-    alert("Selected items deleted successfully!");
-  };
-
-  const handleClear = () => {
-    setModelName("");
-    setIsActive(true);
-    setEditingId(null);
-    setEditModelName("");
-  };
-
-  const startEditing = (id: number, name: string) => {
-    setEditingId(id);
-    setEditModelName(name);
+  // 🔹 Delete option
+  const handleDelete = async (optionId: number) => {
+    if (!confirm("Are you sure you want to delete this option?")) return;
+    try {
+      setLoading(true);
+      await api.delete(`/CarOptions/${optionId}`);
+      setOptions((prev) => prev.filter((opt) => opt.optionId !== optionId));
+      toast.success("Option deleted successfully!");
+      if (editingId === optionId) cancelEditing();
+    } catch (error: any) {
+      toast.error(error.response?.data || "Failed to delete option");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const cancelEditing = () => {
     setEditingId(null);
-    setEditModelName("");
+    setEditOptionName("");
+    setCarOptionName("");
+    setIsActive(true);
+  };
+
+  // 🔹 Toggle Active status
+  const toggleActive = async (opt: Option) => {
+    try {
+      setLoading(true);
+      await api.patch(`/CarOptions/${opt.optionId}`, {
+        optionName: opt.optionName,
+        isActive: !opt.isActive,
+      });
+      setOptions((prev) =>
+        prev.map((o) =>
+          o.optionId === opt.optionId
+            ? { ...o, isActive: !o.isActive }
+            : o
+        )
+      );
+      toast.success("Option status updated!");
+    } catch (error: any) {
+      toast.error(error.response?.data || "Failed to toggle active status");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6 text-white text-center">Additional Options Master</h1>
+      <h1 className="text-2xl font-bold mb-6 text-white text-center">
+        Additional Options Master
+      </h1>
 
-      {/* Action Buttons */}
-      <div className="flex flex-wrap gap-2 mb-6">
-        <Button
-          onClick={handleSave}
-          className="bg-blue-600 hover:bg-blue-700 text-white"
-        >
-          Save
-        </Button>
-        <Button
-          onClick={handleUpdate}
-          className="bg-green-600 hover:bg-green-700 text-white"
-          disabled={editingId === null}
-        >
-          Update
-        </Button>
-
-        <Button
-          onClick={handleDelete}
-          className="bg-red-500 hover:bg-red-600 text-white"
-        >
-          Delete
-        </Button>
-        <Button
-          onClick={handleClear}
-          className="bg-gray-600 hover:bg-gray-700 text-white"
-        >
-          Clear
-        </Button>
-      </div>
-
-      {/* Input Fields */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-      
+      {/* Input + Actions */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 items-end bg-white p-4 rounded shadow">
         <div className="flex-1">
-          <label className="block text-sm font-medium mb-1 text-white">
-            Car option:
+          <label className="block text-sm font-medium mb-1 text-black">
+            Car Option:
           </label>
           <Input
-            value={carOptionsKey}
-            onChange={(e) => setCarOptionsKey(e.target.value)}
-            placeholder="car options"
+            value={editingId ? editOptionName : carOptionName}
+            onChange={(e) =>
+              editingId
+                ? setEditOptionName(e.target.value)
+                : setCarOptionName(e.target.value)
+            }
+            placeholder="Enter option name"
           />
         </div>
 
-        <div className="flex items-center gap-2 bg-[#1f2937] px-2 py-2 rounded h-min self-end border border-gray-600 text-white">
+        <div className="flex items-center gap-2 bg-[#1f2937] px-2 py-2 rounded border border-gray-600 text-white">
           <Checkbox
             id="isActive"
             checked={isActive}
             onCheckedChange={() => setIsActive(!isActive)}
           />
-          <label
-            htmlFor="isActive"
-            className="text-sm font-medium text-white"
-          >
+          <label htmlFor="isActive" className="text-sm font-medium text-white">
             Is Active
           </label>
         </div>
 
+        <div className="flex flex-wrap gap-2">
+          {editingId ? (
+            <>
+              <Button
+                onClick={handleUpdate}
+                className="bg-green-600 hover:bg-green-700 text-white"
+                disabled={loading}
+              >
+                Update
+              </Button>
+              <Button
+                onClick={cancelEditing}
+                className="bg-gray-600 hover:bg-gray-700 text-white"
+                disabled={loading}
+              >
+                Cancel
+              </Button>
+            </>
+          ) : (
+            <Button
+              onClick={handleSave}
+              className="bg-blue-600 hover:bg-blue-700 text-white"
+              disabled={loading}
+            >
+              Save
+            </Button>
+          )}
+        </div>
       </div>
 
       {/* Table */}
-      <div className="border border-gray-600 rounded-lg overflow-x-auto">
+      <div className="border border-gray-600 rounded-lg overflow-x-auto mt-4 bg-white p-4">
         <Table>
-          <TableHeader className="">
+          <TableHeader>
             <TableRow>
               <TableHead className="w-24">OptionId</TableHead>
               <TableHead>Option Name</TableHead>
               <TableHead className="w-24">Active</TableHead>
+              <TableHead className="w-48">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {options.map((model) => (
-              <TableRow key={model.id} className="bg-white hover:bg-gray-100">
-                <TableCell>{model.id}</TableCell>
-                <TableCell>
-                  {editingId === model.id ? (
-                    <Input
-                      value={editModelName}
-                      onChange={(e) => setEditModelName(e.target.value)}
-                      className="w-full bg-gray-800 text-white border-gray-600"
-                    />
-                  ) : (
-                    model.name
-                  )}
-                </TableCell>
+            {options.map((opt) => (
+              <TableRow key={opt.optionId} className="bg-white hover:bg-gray-100">
+                <TableCell>{opt.optionId}</TableCell>
+                <TableCell>{opt.optionName}</TableCell>
                 <TableCell>
                   <Checkbox
-                    checked={model.active}
-                    onCheckedChange={() => {
-                      setOptions(
-                        options.map((m) =>
-                          m.id === model.id ? { ...m, active: !m.active } : m
-                        )
-                      );
-                    }}
+                    checked={opt.isActive}
+                    onCheckedChange={() => toggleActive(opt)}
+                    disabled={loading}
                   />
                 </TableCell>
-                {/* <TableCell className="flex gap-2">
-                  {editingId === model.id ? (
-                    <>
-                      <Button
-                        onClick={() => handleUpdate()}
-                        size="sm"
-                        className="bg-green-600 hover:bg-green-700 text-white"
-                      >
-                        Save
-                      </Button>
-                      <Button onClick={cancelEditing} size="sm" variant="outline">
-                        Cancel
-                      </Button>
-                    </>
-                  ) : (
-                    <>
-                      <Button
-                        onClick={() => startEditing(model.id, model.name)}
-                        size="sm"
-                        variant="outline"
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        onClick={() => handleDelete(model.id)}
-                        size="sm"
-                        className="bg-red-600 hover:bg-red-700 text-white"
-                      >
-                        Delete
-                      </Button>
-                    </>
-                  )}
-                </TableCell> */}
+                <TableCell className="flex gap-2">
+                  <Button
+                    variant="ghost"
+                    onClick={() => startEditing(opt)}
+                    disabled={loading}
+                    className="bg-orange-600 hover:bg-orange-700 text-white"
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    onClick={() => handleDelete(opt.optionId)}
+                    disabled={loading}
+                                        className="bg-red-600 hover:bg-red-700 text-white"
+
+                  >
+                    Delete
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -236,6 +261,6 @@ function optionsMaster() {
       </div>
     </div>
   );
-}
+};
 
-export default optionsMaster;
+export default OptionsMaster;
