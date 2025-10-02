@@ -102,6 +102,7 @@ export default function CarBrandPage() {
         ? "Trucks"
         : "HeavyMachinery"
     );
+        toast.info("Edit mode enabled ✏️");
   };
 
   // Delete
@@ -122,6 +123,7 @@ export default function CarBrandPage() {
     setIsActive(true);
     setImageUrl("");
     setSelectedBrand(null);
+     toast.info("Form cleared 🧹");
   };
 
   // Filter brands
