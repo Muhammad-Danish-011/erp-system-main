@@ -15,7 +15,38 @@ const TablePagination = ({
   itemsPerPage: number;
   onItemsPerPageChange: (items: number) => void;
 }) => {
-  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+  const getPageNumbers = () => {
+    const pages = [];
+    const showEllipsis = totalPages > 7;
+    
+    if (!showEllipsis) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+
+    // Always show first 3 pages
+    for (let i = 1; i <= 3; i++) {
+      pages.push(i);
+    }
+
+    // Handle middle pages
+    if (currentPage > 3 && currentPage < totalPages - 2) {
+      pages.push('...');
+      pages.push(currentPage);
+    }
+
+    // Handle ellipsis
+    if (currentPage <= 3) {
+      pages.push('...');
+    } else if (currentPage >= totalPages - 2) {
+      pages.push('...');
+    }
+
+    // Always show last 2 pages
+    pages.push(totalPages - 1);
+    pages.push(totalPages);
+
+    return pages;
+  };
 
   return (
     <div className="flex items-center justify-center gap-2 mt-4">
@@ -38,17 +69,21 @@ const TablePagination = ({
         Previous
       </button>
 
-      {pages.map((page) => (
-        <button
-          key={page}
-          onClick={() => onPageChange(page)}
-          className={cn(
-            "px-3 py-1 rounded border border-gray-300",
-            currentPage === page && "bg-blue-500 text-white"
-          )}
-        >
-          {page}
-        </button>
+      {getPageNumbers().map((page, index) => (
+        page === '...' ? (
+          <span key={`ellipsis-${index}`} className="px-3 py-1">...</span>
+        ) : (
+          <button
+            key={page}
+            onClick={() => onPageChange(page as number)}
+            className={cn(
+              "px-3 py-1 rounded border border-gray-300",
+              currentPage === page && "bg-blue-500 text-white"
+            )}
+          >
+            {page}
+          </button>
+        )
       ))}
 
       <button

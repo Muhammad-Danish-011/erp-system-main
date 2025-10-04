@@ -1,16 +1,14 @@
-
 "use client";
 
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Menu as MenuIcon, X, Settings as SettingsIcon } from "lucide-react";
+import { EarthIcon, Menu as MenuIcon, X } from "lucide-react";
 import {
   LayoutDashboard,
   Package,
   Users,
-  Settings,
   FileText,
   ChevronDown,
   ChevronRight,
@@ -32,10 +30,9 @@ import {
   CreditCard,
   ShoppingCart,
   AxeIcon,
-  LogOut
+  LogOut,
 } from "lucide-react";
 
-// ... keep your `navigation` and `settingsNav` here
 
 export function Sidebar() {
   const pathname = usePathname();
@@ -43,91 +40,171 @@ export function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false); // mobile sidebar toggle
 
-
   const navigation = [
-  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+    { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
 
-  {
-    name: "Master",
-    href: "",
-    icon: Package,
-    children: [
-      { name: "Car Brand", href: "/master/car-brand", icon: Car },
-      { name: "Map - Inventory / Port Location", href: "/master/map-inventory-port-location", icon: MapPin },
-      { name: "Inspection Cost", href: "/master/inspection-cost", icon: Wrench },
-      { name: "Vehicle Category", href: "/master/vehicle-category", icon: ListChecks },
-      { name: "Car Model", href: "/master/car-model", icon: Car },
-      { name: "Additional Options", href: "/master/additional-options", icon: PlusSquare },
-      { name: "Color", href: "/master/color", icon: Palette },
-      { name: "Ports", href: "/master/ports", icon: Anchor },
-      { name: "Port-Country Mapping", href: "/master/port-country-mapping", icon: Globe },
-      { name: "Freight Charges", href: "/master/freight-charges", icon: Truck },
-      { name: "Axle", href: "/master/axle", icon: AxeIcon },
-    ],
-  },
-  {
-    name: "Transaction",
-    href: "",
-    icon: Users,
-    children: [
-      { name: "Agent Portal", href: "/transaction/agent-portal", icon: Users },
-      {
-        name: "Accounts",
-        href: "",
-        icon: DollarSign,
-        children: [
-          { name: "Money Allocation", href: "/transaction/accounts/money-allocation", icon: DollarSign },
-          { name: "Sales Order Approval", href: "/transaction/accounts/sales-order-approval", icon: CheckCircle },
-          { name: "Payment Vouchers", href: "/transaction/accounts/payment-vouchers", icon: FileText },
-          { name: "Acknowledgement TT Uploaded", href: "/transaction/accounts/acknowledgement-tt", icon: Upload },
-          { name: "New Customer Approval", href: "/transaction/accounts/new-customer-approval", icon: UserPlus },
-        ],
+    {
+      name: "Master",
+      href: "",
+      icon: Package,
+      children: [
+        { name: "Car Brand", href: "/master/car-brand", icon: Car },
+        {
+          name: "Map - Inventory / Port Location",
+          href: "/master/map-inventory-port-location",
+          icon: MapPin,
+        },
+        {
+          name: "Inspection Cost",
+          href: "/master/inspection-cost",
+          icon: Wrench,
+        },
+        {
+          name: "Vehicle Category",
+          href: "/master/vehicle-category",
+          icon: ListChecks,
+        },
+        { name: "Car Model", href: "/master/car-model", icon: Car },
+        {
+          name: "Additional Options",
+          href: "/master/additional-options",
+          icon: PlusSquare,
+        },
+        { name: "Color", href: "/master/color", icon: Palette },
+        { name: "Ports", href: "/master/ports", icon: Anchor },
+        
+         { name: "Country", href: "/master/country", icon: EarthIcon },
+
+
+        {
+          name: "Port-Country Mapping",
+          href: "/master/port-country-mapping",
+          icon: Globe,
+        },
+        {
+          name: "Freight Charges",
+          href: "/master/freight-charges",
+          icon: Truck,
+        },
+        { name: "Axle", href: "/master/axle", icon: AxeIcon },
+      ],
+    },
+    {
+      name: "Transaction",
+      href: "",
+      icon: Users,
+      children: [
+        {
+          name: "Agent Portal",
+          href: "/transaction/agent-portal",
+          icon: Users,
+        },
+        {
+          name: "Accounts",
+          href: "",
+          icon: DollarSign,
+          children: [
+            {
+              name: "Money Allocation",
+              href: "/transaction/accounts/money-allocation",
+              icon: DollarSign,
+            },
+            {
+              name: "Sales Order Approval",
+              href: "/transaction/accounts/sales-order-approval",
+              icon: CheckCircle,
+            },
+            {
+              name: "Payment Vouchers",
+              href: "/transaction/accounts/payment-vouchers",
+              icon: FileText,
+            },
+            {
+              name: "Acknowledgement TT Uploaded",
+              href: "/transaction/accounts/acknowledgement-tt",
+              icon: Upload,
+            },
+            {
+              name: "New Customer Approval",
+              href: "/transaction/accounts/new-customer-approval",
+              icon: UserPlus,
+            },
+          ],
+        },
+        {
+          name: "Add Car Listing",
+          href: "/transaction/add-car-listing",
+          icon: PlusSquare,
+        },
+        {
+          name: "Porforma Invoice",
+          href: "/transaction/porforma-invoice",
+          icon: FileSpreadsheet,
+        },
+        {
+          name: "Payments Received",
+          href: "/transaction/payments-received",
+          icon: CreditCard,
+        },
+        {
+          name: "Sales Order",
+          href: "/transaction/sales-order",
+          icon: ShoppingCart,
+        },
+      ],
+    },
+    {
+      name: "Report",
+      href: "",
+      icon: FileText,
+      children: [
+        {
+          name: "Voucher Report",
+          href: "/orders/voucher-report",
+          icon: FileText,
+        },
+        {
+          name: "Proforma Invoice Report",
+          href: "/orders/proforma-invoice-report",
+          icon: FileSpreadsheet,
+        },
+      ],
+    },
+  ];
+
+  const settingsNav = [
+    // { name: "Settings", href: "/settings", icon: SettingsIcon },
+    {
+      name: "Logout",
+      href: "/sign-in",
+      icon: LogOut,
+      onClick: () => {
+        // Clear all cookies
+        document.cookie.split(";").forEach(function (c) {
+          document.cookie = c
+            .replace(/^ +/, "")
+            .replace(
+              /=.*/,
+              "=;expires=" + new Date().toUTCString() + ";path=/"
+            );
+        });
+
+        // Clear localStorage
+        localStorage.clear();
+
+        // Redirect to login page
+        window.location.href = "/sign-in";
       },
-      { name: "Add Car Listing", href: "/transaction/add-car-listing", icon: PlusSquare },
-      { name: "Porforma Invoice", href: "/transaction/porforma-invoice", icon: FileSpreadsheet },
-      { name: "Payments Received", href: "/transaction/payments-received", icon: CreditCard },
-      { name: "Sales Order", href: "/transaction/sales-order", icon: ShoppingCart },
-    ],
-  },
-  {
-    name: "Report",
-    href: "",
-    icon: FileText,
-    children: [
-      { name: "Voucher Report", href: "/orders/voucher-report", icon: FileText },
-      { name: "Proforma Invoice Report", href: "/orders/proforma-invoice-report", icon: FileSpreadsheet },
-    ],
-  },
-];
+    },
+  ];
 
-const settingsNav = [
-  // { name: "Settings", href: "/settings", icon: SettingsIcon },
-  { 
-    name: "Logout", 
-    href: "/sign-in",
-    icon: LogOut,
-    onClick: () => {
-      // Clear all cookies
-      document.cookie.split(";").forEach(function(c) { 
-        document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
-      });
-      
-      // Clear localStorage
-      localStorage.clear();
-      
-      // Redirect to login page
-      window.location.href = "/sign-in";
-    }
-  }
-];
-
-const toggleMenu = (menuName: string) => {
-  setOpenMenus((prev) =>
-    prev.includes(menuName)
-      ? prev.filter((m) => m !== menuName)
-      : [...prev, menuName]
-  );
-};
+  const toggleMenu = (menuName: string) => {
+    setOpenMenus((prev) =>
+      prev.includes(menuName)
+        ? prev.filter((m) => m !== menuName)
+        : [...prev, menuName]
+    );
+  };
   const renderMenu = (items: any[], depth = 0) => (
     <div className={depth > 0 ? "ml-6 mt-1 space-y-1" : "space-y-1"}>
       {items.map((item) => {
@@ -158,24 +235,27 @@ const toggleMenu = (menuName: string) => {
               )}
               {!isCollapsed && (
                 <>
-                {hasChildren ? (
-  <>
-    <span className="flex-1 text-left">{item.name}</span>
-    {isOpen ? (
-      <ChevronDown className="h-4 w-4" />
-    ) : (
-      <ChevronRight className="h-4 w-4" />
-    )}
-  </>
-) : (
-  <Link href={item.href || "#"} className="flex-1 text-left">
-    {item.name}
-  </Link>
-)}
+                  {hasChildren ? (
+                    <>
+                      <span className="flex-1 text-left">{item.name}</span>
+                      {isOpen ? (
+                        <ChevronDown className="h-4 w-4" />
+                      ) : (
+                        <ChevronRight className="h-4 w-4" />
+                      )}
+                    </>
+                  ) : (
+                    <Link href={item.href || "#"} className="flex-1 text-left">
+                      {item.name}
+                    </Link>
+                  )}
                 </>
               )}
             </button>
-            {!isCollapsed && hasChildren && isOpen && renderMenu(item.children, depth + 1)}
+            {!isCollapsed &&
+              hasChildren &&
+              isOpen &&
+              renderMenu(item.children, depth + 1)}
           </div>
         );
       })}
@@ -235,9 +315,7 @@ const toggleMenu = (menuName: string) => {
             }
             className="text-gray-300 hover:text-white"
           >
-            
-            {isMobileOpen ? <X size={24} /> : <Menu size={24} /> }
-            
+            {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 
@@ -256,7 +334,7 @@ const toggleMenu = (menuName: string) => {
               className={cn(
                 "group flex items-center rounded-md px-2 py-2 text-sm font-medium",
                 pathname.startsWith(item.href)
-                  ? "bg-gray-800 text-white" 
+                  ? "bg-gray-800 text-white"
                   : "text-gray-300 hover:bg-gray-700 hover:text-white"
               )}
             >
@@ -271,8 +349,7 @@ const toggleMenu = (menuName: string) => {
               {!isCollapsed && item.name}
             </Link>
           ))}
-          
-        </div>     
+        </div>
       </div>
     </>
   );

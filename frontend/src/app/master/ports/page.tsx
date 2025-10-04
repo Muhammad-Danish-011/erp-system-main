@@ -1,217 +1,216 @@
 "use client";
-import { useEffect, useState } from "react";
-import axios from "axios";
+
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
-  Table,
   TableHeader,
   TableRow,
   TableHead,
   TableBody,
   TableCell,
+  Table,
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
+import api from "@/lib/api";
+import { toast } from "@/components/ui/CustomToast";
 
-export default function PortMaster() {
+interface Port {
+  portId: number;
+  portName: string;
+  insuranceCost: number;
+  isActive: boolean;
+}
+
+export default function PortMasterPage() {
   const [portName, setPortName] = useState("");
   const [insurance, setInsurance] = useState(100);
   const [isActive, setIsActive] = useState(true);
-  const [ports, setPorts] = useState<any[]>([]);
-  const [selectedId, setSelectedId] = useState<number | null>(null);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [ports, setPorts] = useState<Port[]>([]);
+  const [selectedPort, setSelectedPort] = useState<Port | null>(null);
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const API_URL = "https://localhost:7215/api/Ports"; // backend ka endpoint
-  const token =
-    "PASTE_YOUR_JWT_TOKEN"; // JWT token swagger se ya login se lo
-
-  // Get All Ports
-  const fetchPorts = async () => {
-    try {
-      const res = await axios.get(API_URL, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setPorts(res.data);
-    } catch (err) {
-      console.error("Error fetching ports:", err);
-    }
-  };
-
+  // Fetch ports
   useEffect(() => {
     fetchPorts();
   }, []);
 
-  // Create Port
+  const fetchPorts = async () => {
+    try {
+      setLoading(true);
+      const res = await api.get("/Ports");
+      setPorts(res.data);
+    } catch (error: any) {
+      toast.error(error.response?.data || "Failed to fetch ports");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Save / Update
   const handleSave = async () => {
-    if (!portName.trim()) return;
-    try {
-      await axios.post(
-        API_URL,
-        {
-          portName,
-          isActive,
-          insuranceCost: insurance,
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      fetchPorts(); // refresh list
-      clearForm();
-    } catch (err) {
-      console.error("Error saving port:", err);
+    if (!portName) {
+      toast.error("Port Name is required");
+      return;
     }
-  };
 
-  // Update Port
-  const handleUpdate = async () => {
-    if (!selectedId) return;
+    const payload = {
+      portName,
+      insuranceCost: insurance,
+      isActive,
+    };
+
     try {
-      await axios.patch(
-        `${API_URL}/${selectedId}`,
-        {
-          portName,
-          isActive,
-          insuranceCost: insurance,
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      if (selectedPort) {
+        await api.patch(`/Ports/${selectedPort.portId}`, payload);
+        toast.success("Port updated successfully");
+      } else {
+        await api.post("/Ports", payload);
+        toast.success("Port added successfully");
+      }
       fetchPorts();
-      clearForm();
-    } catch (err) {
-      console.error("Error updating port:", err);
+      handleClear();
+    } catch (error: any) {
+      toast.error(error.response?.data || "Failed to save port");
     }
   };
 
-  // Delete Port
-  const handleDelete = async () => {
-    if (!selectedId) return;
-    try {
-      await axios.delete(`${API_URL}/${selectedId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      fetchPorts();
-      clearForm();
-    } catch (err) {
-      console.error("Error deleting port:", err);
-    }
-  };
-
-  // Select port row
-  const handleRowClick = (port: any) => {
-    setSelectedId(port.portId);
+  // Edit
+  const handleEdit = (port: Port) => {
+    setSelectedPort(port);
     setPortName(port.portName);
-    setInsurance(port.insuranceCost || 100);
+    setInsurance(port.insuranceCost);
     setIsActive(port.isActive);
+    toast.info("Edit mode enabled ✏️");
+  };
+
+  // Delete
+  const handleDelete = async () => {
+    if (!selectedPort) return;
+    try {
+      await api.delete(`/Ports/${selectedPort.portId}`);
+      toast.success("Port deleted successfully");
+      fetchPorts();
+      handleClear();
+    } catch (error: any) {
+      toast.error(error.response?.data || "Failed to delete port");
+    }
   };
 
   // Clear form
-  const clearForm = () => {
-    setSelectedId(null);
+  const handleClear = () => {
     setPortName("");
     setInsurance(100);
     setIsActive(true);
+    setSelectedPort(null);
+    toast.info("Form cleared 🧹");
   };
 
-  // Filter ports based on search
-  const filteredPorts = ports.filter(port => 
-    port.portName.toLowerCase().includes(searchTerm.toLowerCase())
+  // Filter
+  const filteredPorts = ports.filter((p) =>
+    p.portName.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
-    <>
+    <div className="space-y-6">
       <h1 className="text-3xl font-bold text-center mb-8 text-white">Ports</h1>
-      <div className="p-6 bg-white rounded-lg shadow-lg max-w-4xl mx-auto">
-        {/* Search Input */}
-        <div className="mb-4">
+
+      {/* Actions */}
+      <div className="flex items-center gap-2 bg-white p-4 rounded-lg shadow">
+        <Button
+          onClick={handleSave}
+          className="bg-blue-500 hover:bg-blue-600 text-white"
+        >
+          {selectedPort ? "Update" : "Save"}
+        </Button>
+        <Button
+          variant="destructive"
+          onClick={handleDelete}
+          className="bg-red-500 hover:bg-red-600 text-white"
+        >
+          Delete
+        </Button>
+        <Button
+          variant="outline"
+          onClick={handleClear}
+          className="border-gray-300 hover:bg-gray-100 text-gray-700"
+        >
+          Clear
+        </Button>
+      </div>
+
+      {/* Form */}
+      <div className="flex flex-wrap items-center gap-4 bg-white p-4 rounded-lg shadow">
+        <div className="flex flex-col">
+          <label className="text-sm font-medium">Port Name</label>
           <Input
-            type="text"
-            placeholder="Search ports..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full"
+            value={portName}
+            onChange={(e) => setPortName(e.target.value)}
+            placeholder="Enter port name"
+            className="w-56"
           />
         </div>
 
-        {/* Buttons */}
-        <div className="flex gap-2 mb-4">
-          <button
-            onClick={handleSave}
-            className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-          >
-            Save
-          </button>
-          <button
-            onClick={handleUpdate}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          >
-            Update
-          </button>
-          <button
-            onClick={handleDelete}
-            className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-          >
-            Delete
-          </button>
-          <button
-            onClick={clearForm}
-            className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500"
-          >
-            Clear
-          </button>
+        <div className="flex flex-col">
+          <label className="text-sm font-medium">Insurance Cost</label>
+          <Input
+            type="number"
+            value={insurance}
+            onChange={(e) => setInsurance(Number(e.target.value))}
+            className="w-56"
+          />
         </div>
 
-        {/* Form */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-          <div className="flex-1 ">
-            <label className="block text-sm font-medium mb-1 ">Port Name:</label>
-            <Input
-              value={portName}
-              onChange={(e) => setPortName(e.target.value)}
-              placeholder="Enter port name..."
-            />
-          </div>
-          <div className="flex-1">
-            <label className="block text-sm font-medium mb-1">Insurance:</label>
-            <Input
-              type="number"
-              value={insurance}
-              onChange={(e) => setInsurance(Number(e.target.value))}
-            />
-          </div>
+        <div className="flex items-center gap-2 mt-6 bg-[#1f2937] text-white w-[200px] p-2 rounded border border-gray-600">
+          <Checkbox
+            id="isActive"
+            checked={isActive}
+            onCheckedChange={(checked) => setIsActive(checked as boolean)}
+          />
+          <label htmlFor="isActive" className="text-sm">
+            Is Active
+          </label>
+        </div>
+      </div>
 
-          <div className="bg-[#1f2937] text-white px-2 py-2 mt-0 md:mt-5 rounded border border-gray-600">
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={isActive}
-                onChange={(e) => setIsActive(e.target.checked)}
-              />
-              Is Active
-            </label>
-          </div>
+      {/* Table */}
+      <div className="bg-white p-4 rounded-lg shadow">
+        <div className="relative mb-4 w-64">
+          <Search className="absolute left-2 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+          <Input
+            placeholder="Search ports..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="pl-9"
+          />
         </div>
 
-        {/* Table */}
-        <div className="overflow-x-auto border border-gray-300 rounded">
-          <Table>
+        <div className="overflow-x-auto">
+          <Table data={filteredPorts}>
             <TableHeader>
               <TableRow>
-                <TableHead>Port ID</TableHead>
+                <TableHead>ID</TableHead>
                 <TableHead>Port Name</TableHead>
                 <TableHead>Insurance Cost</TableHead>
-                <TableHead className="text-center">Active</TableHead>
+                <TableHead>Active</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {filteredPorts.map((port) => (
-                <TableRow
-                  key={port.portId}
-                  className="cursor-pointer hover:bg-gray-100"
-                  onClick={() => handleRowClick(port)}
-                >
+                <TableRow key={port.portId}>
                   <TableCell>{port.portId}</TableCell>
                   <TableCell>{port.portName}</TableCell>
                   <TableCell>{port.insuranceCost}</TableCell>
-                  <TableCell className="text-center">
+                  <TableCell>
                     <Checkbox checked={port.isActive} disabled />
+                  </TableCell>
+                  <TableCell>
+                    <Button variant="ghost" onClick={() => handleEdit(port)}>
+                      Edit
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
@@ -219,6 +218,6 @@ export default function PortMaster() {
           </Table>
         </div>
       </div>
-    </>
+    </div>
   );
 }

@@ -1,19 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {
-  Table,
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-} from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import api from "@/lib/api";
 import { toast } from "@/components/ui/CustomToast";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 export default function VehicleCategoryMaster() {
   const [categoryName, setCategoryName] = useState("");
@@ -23,14 +16,13 @@ export default function VehicleCategoryMaster() {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // ✅ Fetch Categories
+  // Fetch categories
   const fetchCategories = async () => {
     try {
       setLoading(true);
       const res = await api.get("/Category");
       setCategories(res.data);
     } catch (err: any) {
-      console.error("Error fetching categories:", err);
       toast.error(err.response?.data || "Failed to fetch categories ❌");
     } finally {
       setLoading(false);
@@ -41,7 +33,7 @@ export default function VehicleCategoryMaster() {
     fetchCategories();
   }, []);
 
-  // ✅ Save New Category
+  // Save / Update
   const handleSave = async () => {
     if (!categoryName.trim()) {
       toast.error("Category name is required");
@@ -49,60 +41,29 @@ export default function VehicleCategoryMaster() {
     }
 
     try {
-      await api.post("/Category", {
-        category: categoryName,
-        slug: categoryName.toLowerCase().replace(/\s+/g, "-"),
-        isActive,
-      });
-
-      toast.success("Category saved successfully ✅");
+      if (editingId) {
+        await api.patch(`/Category/${editingId}`, {
+          category: categoryName,
+          slug: categoryName.toLowerCase().replace(/\s+/g, "-"),
+          isActive,
+        });
+        toast.success("Category updated ✅");
+      } else {
+        await api.post("/Category", {
+          category: categoryName,
+          slug: categoryName.toLowerCase().replace(/\s+/g, "-"),
+          isActive,
+        });
+        toast.success("Category added ✅");
+      }
       fetchCategories();
-      setCategoryName("");
-      setIsActive(true);
+      handleClear();
     } catch (err: any) {
-      console.error("Error saving category:", err);
       toast.error(err.response?.data || "Failed to save category ❌");
     }
   };
 
-  // ✅ Update Category
-  const handleUpdate = async () => {
-    if (!editingId) {
-      toast.error("No category selected for update");
-      return;
-    }
-
-    try {
-      await api.patch(`/Category/${editingId}`, {
-        category: categoryName,
-        slug: categoryName.toLowerCase().replace(/\s+/g, "-"),
-        isActive,
-      });
-
-      toast.success("Category updated successfully ✅");
-      fetchCategories();
-      setCategoryName("");
-      setIsActive(true);
-      setEditingId(null);
-    } catch (err: any) {
-      console.error("Error updating category:", err);
-      toast.error(err.response?.data || "Failed to update category ❌");
-    }
-  };
-
-  // ✅ Delete Category
-  const handleDelete = async (id: number) => {
-    try {
-      await api.delete(`/Category/${id}`);
-      toast.success("Category deleted successfully 🗑️");
-      fetchCategories();
-    } catch (err: any) {
-      console.error("Error deleting category:", err);
-      toast.error(err.response?.data || "Failed to delete category ❌");
-    }
-  };
-
-  // ✅ Select Row for Edit
+  // Edit
   const handleEdit = (cat: any) => {
     setEditingId(cat.categoryId);
     setCategoryName(cat.category);
@@ -110,7 +71,19 @@ export default function VehicleCategoryMaster() {
     toast.info("Edit mode enabled ✏️");
   };
 
-  // ✅ Clear Form
+  // Delete
+  const handleDelete = async (id: number) => {
+    try {
+      await api.delete(`/Category/${id}`);
+      toast.success("Category deleted 🗑️");
+      fetchCategories();
+      if (editingId === id) handleClear();
+    } catch (err: any) {
+      toast.error(err.response?.data || "Failed to delete category ❌");
+    }
+  };
+
+  // Clear
   const handleClear = () => {
     setCategoryName("");
     setIsActive(true);
@@ -118,13 +91,13 @@ export default function VehicleCategoryMaster() {
     toast.info("Form cleared 🧹");
   };
 
-  // ✅ Search Filter
+  // Search filter
   const filteredCategories = categories.filter((c) =>
     c.category.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
-    <>
+    <div className="space-y-6">
       <h1 className="text-3xl font-bold text-center mb-8 text-white">
         Vehicle Category
       </h1>
@@ -133,7 +106,7 @@ export default function VehicleCategoryMaster() {
         {/* Buttons */}
         <div className="flex gap-2 mb-4">
           <Button
-            onClick={editingId ? handleUpdate : handleSave}
+            onClick={handleSave}
             disabled={loading}
             className="bg-green-600 hover:bg-green-700 text-white"
           >
@@ -168,7 +141,7 @@ export default function VehicleCategoryMaster() {
           </div>
         </div>
 
-        {/* 🔍 Search */}
+        {/* Search */}
         <div className="mb-4">
           <Input
             type="text"
@@ -179,54 +152,46 @@ export default function VehicleCategoryMaster() {
         </div>
 
         {/* Table */}
-        <div className="overflow-x-auto border border-gray-300 rounded">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Category ID</TableHead>
-                <TableHead>Category</TableHead>
-                <TableHead className="text-center">Active</TableHead>
-                <TableHead className="text-center">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredCategories.length > 0 ? (
-                filteredCategories.map((row) => (
-                  <TableRow key={row.categoryId} className="hover:bg-gray-50">
-                    <TableCell>{row.categoryId}</TableCell>
-                    <TableCell>{row.category}</TableCell>
-                    <TableCell className="text-center">
-                      <Checkbox checked={row.isActive} disabled />
-                    </TableCell>
-                    <TableCell className="text-center space-x-2">
-                      <Button
-                        onClick={() => handleEdit(row)}
-                        size="sm"
-                        className="bg-blue-500 hover:bg-blue-600 text-white"
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        onClick={() => handleDelete(row.categoryId)}
-                        size="sm"
-                        className="bg-red-600 hover:bg-red-700 text-white"
-                      >
-                        Delete
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={4} className="text-center py-4">
-                    {loading ? "Loading..." : "No categories found"}
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </div>
+<div className="overflow-x-auto border border-gray-300 rounded">
+  <Table data={filteredCategories} itemsPerPage={5}>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Category ID</TableHead>
+        <TableHead>Category</TableHead>
+        <TableHead className="text-center">Active</TableHead>
+        <TableHead className="text-center">Actions</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      {filteredCategories.map((row) => (
+        <TableRow key={row.categoryId}>
+          <TableCell>{row.categoryId}</TableCell>
+          <TableCell>{row.category}</TableCell>
+          <TableCell className="text-center">
+            <Checkbox checked={row.isActive} disabled />
+          </TableCell>
+          <TableCell className="text-center space-x-2">
+            <Button
+              onClick={() => handleEdit(row)}
+              size="sm"
+              className="bg-blue-500 hover:bg-blue-600 text-white"
+            >
+              Edit
+            </Button>
+            <Button
+              onClick={() => handleDelete(row.categoryId)}
+              size="sm"
+              className="bg-red-600 hover:bg-red-700 text-white"
+            >
+              Delete
+            </Button>
+          </TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
+  </Table>
+</div>
+
       </div>
-    </>
-  );
-}
+    </div>
+  )};
