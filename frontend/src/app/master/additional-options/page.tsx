@@ -14,6 +14,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import api from "@/lib/api";
 import { toast } from "@/components/ui/CustomToast";
+import Loading from "@/components/ui/Loading";
 
 interface Option {
   optionId: number;
@@ -148,6 +149,10 @@ const OptionsMaster: React.FC = () => {
     }
   };
 
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <h1 className="text-2xl font-bold mb-6 text-white text-center">
@@ -248,8 +253,7 @@ const OptionsMaster: React.FC = () => {
                     variant="destructive"
                     onClick={() => handleDelete(opt.optionId)}
                     disabled={loading}
-                                        className="bg-red-600 hover:bg-red-700 text-white"
-
+                    className="bg-red-600 hover:bg-red-700 text-white"
                   >
                     Delete
                   </Button>

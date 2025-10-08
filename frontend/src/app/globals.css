@@ -2,30 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-
+/* ---------------- Base Styling ---------------- */
 @layer base {
   input:not([type='checkbox']):not([type='radio']),
   select,
   textarea {
-    @apply bg-gray-800 text-white border border-gray-600 ;
+    @apply bg-gray-800 text-white border border-gray-600;
   }
 
-   input::placeholder,
+  input::placeholder,
   textarea::placeholder {
     @apply text-white;
   }
-    /* Date input calendar icon styling */
+
+  /* Date input calendar icon styling */
   input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(1); /* 👈 White bana dega */
+    filter: invert(1);
   }
 
   input[type="date"]::-webkit-calendar-picker-indicator:hover {
     cursor: pointer;
-    filter: invert(1) brightness(1.2); /* Hover pe thoda bright */
+    filter: invert(1) brightness(1.2);
   }
 }
 
-
+/* ---------------- Theme Colors ---------------- */
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -44,16 +45,94 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Hide scrollbar for specific elements */
 .custom_scrollbar_hidden::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Edge */
+  display: none;
 }
 
+/* Responsive overflow example */
 @media only screen and (max-width: 1024px) and (min-width: 375px) {
-.hot_location_custom_overflow{
-
-display: block;
-width: 70px;
-height: 70px;
-overflow: auto;
+  .hot_location_custom_overflow {
+    display: block;
+    width: 70px;
+    height: 70px;
+    overflow: auto;
+  }
 }
+
+/* ---------------- Loader Animations ---------------- */
+
+/* Road movement */
+@keyframes roadMove {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Car driving across the screen */
+@keyframes carDrive {
+  0% {
+    transform: translateX(-150px);
+  }
+  50% {
+    transform: translateX(80vw);
+  }
+  100% {
+    transform: translateX(-150px);
+  }
+}
+
+/* Car idle (bouncing slightly when waiting) */
+@keyframes carIdle {
+  0%,
+  100% {
+    transform: translateX(0) translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+/* Wheel spin animations */
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinReverseSlow {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+/* ---------------- Animation Classes ---------------- */
+
+.animate-road {
+  animation: roadMove 3s linear infinite;
+}
+
+.animate-carDrive {
+  animation: carDrive 5s linear infinite;
+}
+
+.animate-carIdle {
+  animation: carIdle 1.2s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spinSlow 1.2s linear infinite;
+}
+
+.animate-spin-reverse-slow {
+  animation: spinReverseSlow 1.2s linear infinite;
 }

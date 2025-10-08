@@ -188,11 +188,7 @@ export function Sidebar() {
               "=;expires=" + new Date().toUTCString() + ";path=/"
             );
         });
-
-        // Clear localStorage
         localStorage.clear();
-
-        // Redirect to login page
         window.location.href = "/sign-in";
       },
     },

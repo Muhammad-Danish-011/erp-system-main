@@ -15,6 +15,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Search } from "lucide-react";
 import api from "@/lib/api";
 import { toast } from "@/components/ui/CustomToast";
+import Loading from "@/components/ui/Loading";
 
 interface Port {
   portId: number;
@@ -112,6 +113,10 @@ export default function PortMasterPage() {
   const filteredPorts = ports.filter((p) =>
     p.portName.toLowerCase().includes(search.toLowerCase())
   );
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="space-y-6">

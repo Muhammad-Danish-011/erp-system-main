@@ -12,6 +12,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import api from "@/lib/api";
 import { toast } from "@/components/ui/CustomToast";
+import Loading from "@/components/ui/Loading";
 
 export default function VehicleAxleMaster() {
   const [axleName, setAxleName] = useState("");
@@ -38,6 +39,10 @@ export default function VehicleAxleMaster() {
   useEffect(() => {
     fetchAxles();
   }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   // ✅ Save New Axle
   const handleSave = async () => {

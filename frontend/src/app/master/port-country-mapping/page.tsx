@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import api from "@/lib/api";
 import { toast } from "@/components/ui/CustomToast";
+import Loading from "@/components/ui/Loading";
 
 interface Mapping {
   id: number;
@@ -47,6 +48,10 @@ export default function CountryPortMapping() {
   useEffect(() => {
     fetchMappings();
   }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   // Save new mapping
   const handleSave = async () => {

@@ -12,8 +12,10 @@ import {
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import Loading from "@/components/ui/Loading";
 
 function ModelsMaster() {
+  const [loading, setLoading] = useState(false);
   const [vehicleType, setVehicleType] = useState("Cars");
   const [carMake, setCarMake] = useState("Toyota");
   const [modelName, setModelName] = useState("");
@@ -82,6 +84,10 @@ function ModelsMaster() {
     setEditingId(null);
     setEditModelName("");
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
@@ -159,19 +165,6 @@ function ModelsMaster() {
               onChange={(e) => setModelName(e.target.value)}
               placeholder="Enter model name"
             />
-            {/* <div className="flex items-center gap-2 bg-white p-2 rounded">
-              <Checkbox
-                id="isActive"
-                checked={isActive}
-                onCheckedChange={() => setIsActive(!isActive)}
-              />
-              <label
-                htmlFor="isActive"
-                className="text-sm font-medium text-gray-900"
-              >
-                Is Active
-              </label>
-            </div> */}
           </div>
         </div>
 

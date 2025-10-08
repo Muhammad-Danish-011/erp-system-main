@@ -11,6 +11,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import api from "@/lib/api";
 import { toast } from "@/components/ui/CustomToast";
+import Loading from "@/components/ui/Loading";
 
 export default function FreightChargeMaster() {
   const [charges, setCharges] = useState<any[]>([]);
@@ -29,7 +30,7 @@ export default function FreightChargeMaster() {
   const [freightCharge, setFreightCharge] = useState("");
   const [isActive, setIsActive] = useState(true);
 
-  // ✅ Fetch all charges
+
   const fetchCharges = async () => {
     try {
       setLoading(true);
@@ -157,6 +158,10 @@ export default function FreightChargeMaster() {
 
   return (
     <>
+        {loading ? (
+              <Loading />  
+          ) : (
+            <>
       <h1 className="text-3xl font-bold text-center mb-8 text-white">
         Freight Charges
       </h1>
@@ -328,5 +333,8 @@ export default function FreightChargeMaster() {
 </div>
 </div>
 </>
-);
-}
+
+)}
+
+</>
+  )}

@@ -7,6 +7,7 @@ import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@
 import React, { useState, useEffect } from "react";
 import api from "@/lib/api";
 import { toast } from "@/components/ui/CustomToast";
+import Loading from "@/components/ui/Loading";
 
 interface Color {
   colorId: number;
@@ -40,6 +41,10 @@ export default function CarColorMaster() {
   useEffect(() => {
     fetchColors();
   }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   // 🔹 Filter colors based on search
   const filteredColors = colors.filter(color => 

@@ -15,6 +15,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Search } from "lucide-react";
 import api from "@/lib/api";
 import { toast } from "@/components/ui/CustomToast";
+import Loading from "@/components/ui/Loading";
 
 interface CarBrand {
   makeId: number;
@@ -34,6 +35,8 @@ export default function CarBrandPage() {
   const [selectedBrand, setSelectedBrand] = useState<CarBrand | null>(null);
   const [brands, setBrands] = useState<CarBrand[]>([]);
   const [loading, setLoading] = useState(false);
+
+
 
   // Fetch brands whenever vehicle type changes
   useEffect(() => {
@@ -133,6 +136,10 @@ export default function CarBrandPage() {
 
   return (
     <div className="space-y-6">
+       {loading ? (
+          <Loading />  
+      ) : (
+        <>
       <h1 className="text-3xl font-bold text-center mb-8 text-white">
         Car Brands
       </h1>
@@ -260,6 +267,9 @@ export default function CarBrandPage() {
           </Table>
         </div>
       </div>
+      
+    </>
+            )}
     </div>
   );
 }

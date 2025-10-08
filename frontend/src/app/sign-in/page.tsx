@@ -13,22 +13,28 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Logo from "@/components/ui/logo";
-import LoadingSpinner from "@/components/ui/loadingSpinner";
 import { TriangleAlert } from "lucide-react";
-import { Eye, EyeOff } from "lucide-react"; // Added eye icons
+import { Eye, EyeOff } from "lucide-react";
 import CustomToast, { toast } from "@/components/ui/CustomToast";
+import Loading from "@/components/ui/Loading";
 
 const SignIn = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false); // Added password visibility state
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+  if (loading) {
+    return <Loading />;
+  }
 
 const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
   setPending(true);
+  setLoading(true);
   setError("");
 
   try {
@@ -40,7 +46,6 @@ const handleSubmit = async (e: React.FormEvent) => {
     const data = response.data;
 
     if (data?.token) {
-      // ✅ Save all required info to localStorage
       localStorage.setItem("token", data.token);
       localStorage.setItem("userId", data.userID || "");
       localStorage.setItem("employeeName", data.employeeName || "");
@@ -84,9 +89,9 @@ const handleSubmit = async (e: React.FormEvent) => {
     toast.error(message);
   } finally {
     setPending(false);
+    setLoading(false);
   }
 };
-
 
   return (
     <div
@@ -180,7 +185,7 @@ const handleSubmit = async (e: React.FormEvent) => {
               disabled={pending}
             >
               {pending ? (
-                <LoadingSpinner />
+                <Loading />
               ) : (
                 <>
                   <img src="/log-in.png" alt="" className="w-6 h-6" /> Login

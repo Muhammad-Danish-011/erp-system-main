@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import api from "@/lib/api";
 import { toast } from "@/components/ui/CustomToast";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import Loading from "@/components/ui/Loading";
 
 export default function VehicleCategoryMaster() {
   const [categoryName, setCategoryName] = useState("");
@@ -95,6 +96,10 @@ export default function VehicleCategoryMaster() {
   const filteredCategories = categories.filter((c) =>
     c.category.toLowerCase().includes(search.toLowerCase())
   );
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="space-y-6">

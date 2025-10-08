@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardHeader,
-  CardContent,
+  CardContent, 
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
@@ -18,6 +18,7 @@ import Logo from "@/components/ui/logo";
 import { validateSignupForm } from "./signupValidation";
 import axios from "axios";
 import { toast } from "@/components/ui/CustomToast";
+import Loading from "@/components/ui/Loading";
 
 interface SignUpForm {
   fullName: string;
@@ -39,6 +40,7 @@ interface SignUpForm {
 
 const SignUp = () => {
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
 
   const [form, setForm] = useState<SignUpForm>({
     fullName: "",
@@ -66,6 +68,9 @@ const SignUp = () => {
   const [role, setRoles] = useState<any[]>([]);
   const [error, setError] = useState("");
 
+  if (loading) {
+    return <Loading />;
+  }
 const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
   setPending(true);
